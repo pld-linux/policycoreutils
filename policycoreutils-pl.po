@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: policycoreutils 1.16\n"
-"POT-Creation-Date: 2004-08-29 00:38+0200\n"
-"PO-Revision-Date: 2004-08-29 00:39+0200\n"
+"Project-Id-Version: policycoreutils 1.18\n"
+"POT-Creation-Date: 2004-11-04 20:31+0100\n"
+"PO-Revision-Date: 2004-11-04 20:32+0100\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -15,53 +15,60 @@ msgstr ""
 
 #: load_policy/load_policy.c:22
 #, c-format
-msgid "usage:  %s [-b] policyfile [booleanfile]\n"
-msgstr "Sk³adnia: %s [-b] plik-polityki [plik-ustawieñ-logicznych]\n"
+msgid "usage:  %s [-q] [-b] policyfile [booleanfile]\n"
+msgstr "Sk³adnia: %s [-q] [-b] plik-polityki [plik-ustawieñ-logicznych]\n"
 
-#: load_policy/load_policy.c:59
+#: load_policy/load_policy.c:62
 #, c-format
 msgid "Can't open '%s':  %s\n"
 msgstr "Nie mo¿na otworzyæ '%s': %s\n"
 
-#: load_policy/load_policy.c:65
+#: load_policy/load_policy.c:68
 #, c-format
 msgid "Can't stat '%s':  %s\n"
 msgstr "Nie mo¿na wykonaæ stat na '%s': %s\n"
 
-#: load_policy/load_policy.c:72
+#: load_policy/load_policy.c:75
 #, c-format
 msgid "Can't map '%s':  %s\n"
 msgstr "Nie mo¿na podmapowaæ '%s': %s\n"
 
-#. No booleans file or stale booleans in the file; non-fatal.
-#. Stale booleans in the file; non-fatal.
-#: load_policy/load_policy.c:84 load_policy/load_policy.c:116
+#: load_policy/load_policy.c:88
 #, c-format
-msgid "%s:  Warning!  Error while setting booleans:  %s\n"
-msgstr "%s: Uwaga! B³±d podczas ustawiania warto¶ci logicznych: %s\n"
+msgid "%s:  Warning!  Error while setting booleans from %s:  %s\n"
+msgstr "%s: Uwaga! B³±d podczas ustawiania warto¶ci logicznych z %s: %s\n"
 
-#: load_policy/load_policy.c:86 load_policy/load_policy.c:118
+#: load_policy/load_policy.c:90
 #, c-format
-msgid "%s:  Error while setting booleans:  %s\n"
-msgstr "%s: B³±d podczas ustawiania warto¶ci logicznych: %s\n"
+msgid "%s:  Error while setting booleans from %s:  %s\n"
+msgstr "%s: B³±d podczas ustawiania warto¶ci logicznych z %s: %s\n"
 
-#. Possibly ok, as there may be no booleans.
-#: load_policy/load_policy.c:95
+#: load_policy/load_policy.c:100
 #, c-format
 msgid "%s:  Warning!  Error while getting boolean names:  %s\n"
 msgstr "%s: Uwaga! B³±d podczas pobierania nazw ustawieñ logicznych: %s\n"
 
-#: load_policy/load_policy.c:102
+#: load_policy/load_policy.c:107
 #, c-format
 msgid "%s:  out of memory\n"
 msgstr "%s: pamiêæ wyczerpana!\n"
 
-#: load_policy/load_policy.c:108
+#: load_policy/load_policy.c:113
 #, c-format
 msgid "%s:  Error while getting value for boolean %s:  %s\n"
 msgstr "%s: B³±d podczas pobierania warto¶ci ustawienia logicznego %s: %s\n"
 
-#: load_policy/load_policy.c:126
+#: load_policy/load_policy.c:122
+#, c-format
+msgid "%s:  Warning!  Error while setting booleans:  %s\n"
+msgstr "%s: Uwaga! B³±d podczas ustawiania warto¶ci logicznych: %s\n"
+
+#: load_policy/load_policy.c:124
+#, c-format
+msgid "%s:  Error while setting booleans:  %s\n"
+msgstr "%s: B³±d podczas ustawiania warto¶ci logicznych: %s\n"
+
+#: load_policy/load_policy.c:132
 #, c-format
 msgid "%s:  security_load_policy failed\n"
 msgstr "%s: security_load_policy nie powiod³o siê\n"
