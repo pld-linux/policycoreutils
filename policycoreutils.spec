@@ -2,11 +2,13 @@ Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.4
-Release:	1
+Release:	2
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
 # Source0-md5:	c047074b07068e979274ab13a7dfbc7d
+Source1:	%{name}-newrole.pamd
+Source2:	%{name}-run_init.pamd
 BuildRequires:	libselinux-devel
 BuildRequires:	pam-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -59,11 +61,15 @@ CFLAGS="%{rpmcflags}" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/pam.d}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/{pam.d,security/console.apps}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/newrole
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
+:> $RPM_BUILD_ROOT/etc/security/console.apps/run_init
 
 %find_lang %{name}
 
@@ -80,4 +86,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
+%config(missingok) /etc/security/console.apps/*
 %{_mandir}/man[18]/*
