@@ -2,20 +2,20 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.8
+Version:	1.10
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	a0675f8049f06a9c11f080951da57461
+# Source0-md5:	50c449595b8d415e2e00afd1bea2abe0
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel >= 0:1.8
+BuildRequires:	libselinux-devel >= 0:1.10
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
-Requires:	libselinux >= 0:1.8
+Requires:	libselinux >= 0:1.10
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -99,12 +99,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/newrole
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
-%attr(755,root,root) %{_sbindir}/restorecon
+%attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/setfiles
+%attr(755,root,root) %{_sbindir}/sestatus
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/*
+%config(noreplace) %verify(not size mtime md5) /etc/sestatus.conf
 %{_mandir}/man[18]/*
 
 %files tools-perl
