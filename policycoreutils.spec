@@ -2,22 +2,22 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.20
+Version:	1.22
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	21c7265641ef35278aa935afe255447a
+# Source0-md5:	478ab461726e06dcce2a47cab1f79d22
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel >= 0:1.20
-BuildRequires:	libsepol-devel >= 1.2
+BuildRequires:	libselinux-devel >= 0:1.22
+BuildRequires:	libsepol-devel >= 1.4
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
-Requires:	libselinux >= 0:1.20
-Requires:	libsepol >= 1.2
+Requires:	libselinux >= 0:1.22
+Requires:	libsepol >= 1.4
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -100,10 +100,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog
 %attr(4755,root,root) %{_bindir}/newrole
-%attr(755,root,root) %{_sbindir}/genhomedircon
-%attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
+%attr(755,root,root) %{_sbindir}/genhomedircon
+%attr(755,root,root) %{_sbindir}/load_policy
+%attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/sestatus
