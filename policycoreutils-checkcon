@@ -1,0 +1,13 @@
+#!/bin/sh 
+if [ $# == 0 ]; then
+    echo "usage: $0 path ..."
+    exit 1
+fi
+make -C /etc/security/selinux/src/policy file_contexts/file_contexts 2&>1 > /dev/null
+relabels=`echo $@ | tr " " "\n" | setfiles -q -v -n -s /etc/security/selinux/src/policy/file_contexts/file_contexts 2> /dev/null | grep relabeling`
+if [ -z "$relabels" ]; then
+exit 0
+else
+echo $relabels
+exit 1
+fi
