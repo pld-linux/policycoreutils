@@ -1,4 +1,5 @@
-Summary:	SELinux policy core utilities.
+Summary:	SELinux policy core utilities
+Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.0
 Release:	1
@@ -28,22 +29,23 @@ to switch roles, and run_init to run /etc/init.d scripts in the proper
 context.
 
 %description -l pl
-Security-enhanced Linux jest prototypem j±dra Linuksa i wielu aplikacji 
-u¿ytkowych o funkcjach podwy¿szonego bezpieczeñstwa. Zaprojektowany jest
-tak, aby w prosty sposób ukazaæ znaczenie mandatowej kontroli dostêpu dla 
-spo³eczno¶ci Linuksowej. Ukazuje równie¿ jak tak± kontrolê mo¿na dodaæ do 
-istniej±cego systemu typu Linuks. J±dro SELinux zawiera nowe sk³adniki 
-architektury pierwotnie opracowane w celu ulepszenia bezpieczeñstwa systemu 
-operacyjnego Flask. Te elementy zapewniaj± ogólne wsparcie we wdra¿aniu wielu 
-typów polityk mandatowej kontroli dostêpu, w³±czaj±c te wzorowane na: Type 
-Enforcement (TE), kontroli dostêpu opartej na rolach (RBAC) i zabezpieczeniach 
-wielopoziomowych.
+Security-enhanced Linux jest prototypem j±dra Linuksa i wielu
+aplikacji u¿ytkowych o funkcjach podwy¿szonego bezpieczeñstwa.
+Zaprojektowany jest tak, aby w prosty sposób ukazaæ znaczenie
+mandatowej kontroli dostêpu dla spo³eczno¶ci Linuksowej. Ukazuje
+równie¿ jak tak± kontrolê mo¿na dodaæ do istniej±cego systemu typu
+Linux. J±dro SELinux zawiera nowe sk³adniki architektury pierwotnie
+opracowane w celu ulepszenia bezpieczeñstwa systemu operacyjnego
+Flask. Te elementy zapewniaj± ogólne wsparcie we wdra¿aniu wielu typów
+polityk mandatowej kontroli dostêpu, w³±czaj±c te wzorowane na: Type
+Enforcement (TE), kontroli dostêpu opartej na rolach (RBAC) i
+zabezpieczeniach wielopoziomowych.
 
-policycoreutils zawiera narzêdzia do usatalania polityki, które s± niezbêdne
-do podstawowych operacji na systemie SELinux. Pakiet zawiera load_policy do
-wczytywania polityki, setfiles do znaczenia systemu plików, newrole do 
-prze³±czania ról i run_init do uruchamiania w w³a¶ciwym kontek¶cie skryptów 
-zawartych w /etc/rc.d/init.d.
+policycoreutils zawiera narzêdzia do ustalania polityki, które s±
+niezbêdne do podstawowych operacji na systemie SELinux. Pakiet zawiera
+load_policy do wczytywania polityki, setfiles do znaczenia systemu
+plików, newrole do prze³±czania ról i run_init do uruchamiania we
+w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
 
 %prep
 %setup -q
@@ -54,11 +56,11 @@ zawartych w /etc/rc.d/init.d.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_sbindir}
-install -d $RPM_BUILD_ROOT%{_mandir}/{man1,man8}
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/pam.d
-%{__make} DESTDIR="$RPM_BUILD_ROOT" MANDIR="$RPM_BUILD_ROOT%{_mandir}" install
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/pam.d}
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -69,7 +71,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_bindir}/newrole
-%{_sysconfdir}/pam.d/newrole
-%{_sysconfdir}/pam.d/run_init
-%{_mandir}/man1/*.gz
-%{_mandir}/man8/*.gz
+/etc/pam.d/newrole
+/etc/pam.d/run_init
+%{_mandir}/man[18]/*
