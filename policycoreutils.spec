@@ -56,16 +56,16 @@ plików, newrole do prze³±czania ról i run_init do uruchamiania we
 w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
 
 %package tools-perl
-Summary:        policycoreutils tools written in perl
-Summary(pl):    Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu
-Group:          Base
-Requires:       %{name} = %{version}-%{release}
+Summary:	policycoreutils tools written in Perl
+Summary(pl):	Zestaw narzêdzi i skryptów policycoreutils napisanych w Perlu
+Group:		Base
+Requires:	%{name} = %{version}-%{release}
 
 %description tools-perl
-policycoreutils tools written in perl.
+policycoreutils tools written in Perl.
 
 %description tools-perl -l pl
-Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu.
+Zestaw narzêdzi i skryptów policycoreutils napisanych w Perlu.
 
 %prep
 %setup -q
