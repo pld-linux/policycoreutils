@@ -1,0 +1,16 @@
+Index: policycoreutils/setfiles/setfiles.c
+===================================================================
+RCS file: /nfshome/pal/CVS/selinux-usr/policycoreutils/setfiles/setfiles.c,v
+retrieving revision 1.10
+diff -u -r1.10 setfiles.c
+--- policycoreutils/setfiles/setfiles.c	20 Nov 2003 15:29:17 -0000	1.10
++++ policycoreutils/setfiles/setfiles.c	28 Jan 2004 16:51:21 -0000
+@@ -476,7 +476,7 @@
+ 				}
+ 				else {
+ 					/* If same contexts give warning */
+-					fprintf(stderr,
++					QPRINTF(
+ 					"WARNING: Multiple same specifications for %s.\n",
+ 						curr_spec->regex_str);
+ 				}
