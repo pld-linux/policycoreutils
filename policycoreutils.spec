@@ -7,6 +7,7 @@ License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
 # Source0-md5:	eca60ac3947353128e226f64cb9adc55
+BuildRequires:	glibc-static
 BuildRequires:	libselinux-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
