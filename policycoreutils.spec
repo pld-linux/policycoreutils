@@ -1,14 +1,14 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.2
+Version:	1.4
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	eca60ac3947353128e226f64cb9adc55
-BuildRequires:	glibc-static
-BuildRequires:	libselinux-static
+# Source0-md5:	c047074b07068e979274ab13a7dfbc7d
+BuildRequires:	libselinux-devel
+BuildRequires:	pam-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -75,6 +75,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/run_init
+# perl script
+#%attr(755,root,root) %{_bindir}/audit2allow
 %attr(755,root,root) %{_bindir}/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
