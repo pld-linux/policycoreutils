@@ -99,6 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/newrole
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
+%attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/setfiles
