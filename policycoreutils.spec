@@ -2,18 +2,15 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.4
-Release:	4
+Version:	1.6
+Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	c047074b07068e979274ab13a7dfbc7d
+# Source0-md5:	be5a8cb948137e86ea02b6d72dd0a405
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
-Source3:	%{name}-checkcon
-Source4:	%{name}-genhomedircon
-Source5:	%{name}-restorecon
-Patch0:		%{name}-setfiles-quiet.patch
+Patch0:		%{name}-sh.patch
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
 BuildRequires:	pam-devel
@@ -61,7 +58,7 @@ w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
 Summary:        policycoreutils tools written in perl
 Summary(pl):    Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu
 Group:          Base
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description tools-perl
 policycoreutils tools written in perl.
@@ -91,10 +88,6 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/{pam.
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/newrole
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
 :> $RPM_BUILD_ROOT/etc/security/console.apps/run_init
-
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sbindir}/checkcon
-install %{SOURCE4} $RPM_BUILD_ROOT%{_sbindir}/genhomedircon
-install %{SOURCE5} $RPM_BUILD_ROOT%{_sbindir}/restorecon
 
 %find_lang %{name}
 
