@@ -52,7 +52,11 @@ w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
 %patch0 -p1
 
 %build
-%{__make}
+# CFLAGS must be passed in environment, not as make argument
+# (because of CFLAGS+=...)
+CFLAGS="%{rpmcflags}" \
+%{__make} \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -71,6 +75,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_bindir}/newrole
-/etc/pam.d/newrole
-/etc/pam.d/run_init
+%config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
+%config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
 %{_mandir}/man[18]/*
