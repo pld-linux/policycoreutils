@@ -10,6 +10,7 @@ Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
 # Source0-md5:	c047074b07068e979274ab13a7dfbc7d
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
+BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
