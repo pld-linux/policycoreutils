@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: policycoreutils 1.6\n"
+"Project-Id-Version: policycoreutils 1.8\n"
 "POT-Creation-Date: 2004-02-24 23:37+0100\n"
 "PO-Revision-Date: 2004-02-24 23:39+0100\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
