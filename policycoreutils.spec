@@ -3,13 +3,17 @@ Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.4
-Release:	3
+Release:	4
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
 # Source0-md5:	c047074b07068e979274ab13a7dfbc7d
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
+Source3:	%{name}-checkcon
+Source4:	%{name}-genhomedircon
+Source5:	%{name}-restorecon
+Patch0:		%{name}-setfiles-quiet.patch
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
 BuildRequires:	pam-devel
@@ -66,6 +70,7 @@ Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 # CFLAGS must be passed in environment, not as make argument
@@ -86,6 +91,10 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/newrole
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
 :> $RPM_BUILD_ROOT/etc/security/console.apps/run_init
 
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sbindir}/checkcon
+install %{SOURCE4} $RPM_BUILD_ROOT%{_sbindir}/genhomedircon
+install %{SOURCE5} $RPM_BUILD_ROOT%{_sbindir}/restorecon
+
 %find_lang %{name}
 
 %clean
@@ -93,10 +102,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindir}/setfiles
-%attr(755,root,root) %{_sbindir}/load_policy
-%attr(755,root,root) %{_sbindir}/run_init
 %attr(4755,root,root) %{_bindir}/newrole
+%attr(755,root,root) %{_sbindir}/checkcon
+%attr(755,root,root) %{_sbindir}/genhomedircon
+%attr(755,root,root) %{_sbindir}/load_policy
+%attr(755,root,root) %{_sbindir}/restorecon
+%attr(755,root,root) %{_sbindir}/run_init
+%attr(755,root,root) %{_sbindir}/setfiles
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/*
