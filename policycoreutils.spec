@@ -1,14 +1,13 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.0
+Version:	1.2
 Release:	1
 License:	GPL
 Group:		Base
-# Source0-md5:	bf4a37c68685dd969bad1cecd94b1860
-Source0:	http://www.nsa.gov/selinux/lk/%{name}-%{version}.tgz
-Patch0:		%{name}-makefile.patch
-BuildRequires:	libselinux-devel
+Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
+# Source0-md5:	eca60ac3947353128e226f64cb9adc55
+BuildRequires:	libselinux-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,7 +48,6 @@ w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 # CFLAGS must be passed in environment, not as make argument
@@ -66,10 +64,12 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/pam.d
 	DESTDIR=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir}
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/load_policy
