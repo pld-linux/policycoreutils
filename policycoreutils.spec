@@ -18,6 +18,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
+Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
