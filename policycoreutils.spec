@@ -2,20 +2,20 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.6
-Release:	2
+Version:	1.8
+Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	be5a8cb948137e86ea02b6d72dd0a405
+# Source0-md5:	a0675f8049f06a9c11f080951da57461
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
-Patch0:		%{name}-sh.patch
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel
+BuildRequires:	libselinux-devel >= 0:1.8
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
+Requires:	libselinux >= 0:1.8
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -69,7 +69,6 @@ Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu.
 
 %prep
 %setup -q
-%patch0 -p1
 
 cp -f %{SOURCE3} po/pl.po
 
@@ -98,7 +97,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/newrole
-%attr(755,root,root) %{_sbindir}/checkcon
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/restorecon
