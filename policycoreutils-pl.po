@@ -4,176 +4,209 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: policycoreutils 1.8\n"
-"POT-Creation-Date: 2004-02-24 23:37+0100\n"
-"PO-Revision-Date: 2004-02-24 23:39+0100\n"
+"Project-Id-Version: policycoreutils 1.16\n"
+"POT-Creation-Date: 2004-08-29 00:38+0200\n"
+"PO-Revision-Date: 2004-08-29 00:39+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: load_policy/load_policy.c:29
+#: load_policy/load_policy.c:22
 #, c-format
-msgid "usage:  %s policyfile\n"
-msgstr "Sk³adnia: %s plik-polityki\n"
+msgid "usage:  %s [-b] policyfile [booleanfile]\n"
+msgstr "Sk³adnia: %s [-b] plik-polityki [plik-ustawieñ-logicznych]\n"
 
-#: load_policy/load_policy.c:35
+#: load_policy/load_policy.c:59
 #, c-format
 msgid "Can't open '%s':  %s\n"
 msgstr "Nie mo¿na otworzyæ '%s': %s\n"
 
-#: load_policy/load_policy.c:41
+#: load_policy/load_policy.c:65
 #, c-format
 msgid "Can't stat '%s':  %s\n"
 msgstr "Nie mo¿na wykonaæ stat na '%s': %s\n"
 
-#: load_policy/load_policy.c:48
+#: load_policy/load_policy.c:72
 #, c-format
 msgid "Can't map '%s':  %s\n"
 msgstr "Nie mo¿na podmapowaæ '%s': %s\n"
 
-#: load_policy/load_policy.c:55
+#. No booleans file or stale booleans in the file; non-fatal.
+#. Stale booleans in the file; non-fatal.
+#: load_policy/load_policy.c:84 load_policy/load_policy.c:116
+#, c-format
+msgid "%s:  Warning!  Error while setting booleans:  %s\n"
+msgstr "%s: Uwaga! B³±d podczas ustawiania warto¶ci logicznych: %s\n"
+
+#: load_policy/load_policy.c:86 load_policy/load_policy.c:118
+#, c-format
+msgid "%s:  Error while setting booleans:  %s\n"
+msgstr "%s: B³±d podczas ustawiania warto¶ci logicznych: %s\n"
+
+#. Possibly ok, as there may be no booleans.
+#: load_policy/load_policy.c:95
+#, c-format
+msgid "%s:  Warning!  Error while getting boolean names:  %s\n"
+msgstr "%s: Uwaga! B³±d podczas pobierania nazw ustawieñ logicznych: %s\n"
+
+#: load_policy/load_policy.c:102
+#, c-format
+msgid "%s:  out of memory\n"
+msgstr "%s: pamiêæ wyczerpana!\n"
+
+#: load_policy/load_policy.c:108
+#, c-format
+msgid "%s:  Error while getting value for boolean %s:  %s\n"
+msgstr "%s: B³±d podczas pobierania warto¶ci ustawienia logicznego %s: %s\n"
+
+#: load_policy/load_policy.c:126
 #, c-format
 msgid "%s:  security_load_policy failed\n"
 msgstr "%s: security_load_policy nie powiod³o siê\n"
 
-#: newrole/newrole.c:84
+#: newrole/newrole.c:85
 #, c-format
 msgid "Out of memory!\n"
 msgstr "Koniec pamiêci!\n"
 
-#: newrole/newrole.c:142 run_init/run_init.c:118
+#: newrole/newrole.c:143 run_init/run_init.c:119
 #, c-format
 msgid "failed to initialize PAM\n"
 msgstr "nie uda³o siê zainicjowaæ PAM\n"
 
-#: newrole/newrole.c:172 run_init/run_init.c:147
+#: newrole/newrole.c:173 run_init/run_init.c:148
 msgid "Password:"
 msgstr "Has³o:"
 
-#: newrole/newrole.c:204 run_init/run_init.c:179
+#: newrole/newrole.c:205 run_init/run_init.c:180
 #, c-format
 msgid "Cannot find your entry in the shadow passwd file.\n"
 msgstr "Nie mo¿na znale¼æ wpisu u¿ytkownika w pliku hase³ shadow.\n"
 
-#: newrole/newrole.c:210 run_init/run_init.c:185
+#: newrole/newrole.c:211 run_init/run_init.c:186
 #, c-format
 msgid "getpass cannot open /dev/tty\n"
 msgstr "getpass nie mo¿e otworzyæ /dev/tty\n"
 
-#: newrole/newrole.c:279
+#: newrole/newrole.c:281
 #, c-format
 msgid "Sorry, newrole may be used only on a SELinux kernel.\n"
 msgstr "Niestety newrole mo¿e byæ u¿ywane tylko z j±drem SELinux.\n"
 
-#: newrole/newrole.c:292
+#: newrole/newrole.c:294
 #, c-format
 msgid "Error: multiple roles specified\n"
 msgstr "B³±d: podano wiele ról\n"
 
-#: newrole/newrole.c:301
+#: newrole/newrole.c:303
 #, c-format
 msgid "Error: multiple types specified\n"
 msgstr "B³±d: podano wiele typów\n"
 
-#: newrole/newrole.c:325
+#: newrole/newrole.c:327
 #, c-format
 msgid "Couldn't get default type.\n"
 msgstr "Nie uda³o siê pobraæ domy¶lnego typu.\n"
 
-#: newrole/newrole.c:347
+#: newrole/newrole.c:349
 #, c-format
 msgid "failed to get old_context.\n"
 msgstr "nie uda³o siê pobraæ poprzedniego kontekstu (old_context).\n"
 
-#: newrole/newrole.c:365
+#: newrole/newrole.c:363
+#, c-format
+msgid "failed to get new context.\n"
+msgstr "nie uda³o siê pobraæ nowego kontekstu.\n"
+
+#: newrole/newrole.c:380
 #, c-format
 msgid "cannot find your entry in the passwd file.\n"
 msgstr "nie mo¿na znale¼æ wpisu u¿ytkownika w pliku passwd.\n"
 
-#: newrole/newrole.c:374
+#: newrole/newrole.c:389
 #, c-format
 msgid "Authenticating %s.\n"
 msgstr "Uwierzytelnianie %s.\n"
 
-#: newrole/newrole.c:383
+#: newrole/newrole.c:398
 #, c-format
 msgid "newrole: incorrect password for %s\n"
 msgstr "newrole: nieprawid³owe has³o dla u¿ytkownika %s\n"
 
-#: newrole/newrole.c:407
+#: newrole/newrole.c:422
 #, c-format
 msgid "failed to set new role %s\n"
 msgstr "ustawienie nowej roli %s nie powiod³o siê\n"
 
-#: newrole/newrole.c:419
+#: newrole/newrole.c:434
 #, c-format
 msgid "failed to set new type %s\n"
 msgstr "ustawienie nowego typu %s nie powiod³o siê\n"
 
-#: newrole/newrole.c:431
+#: newrole/newrole.c:446
 #, c-format
 msgid "failed to convert new context to string\n"
 msgstr "konwersja nowego kontekstu na ³añcuch nie powiod³a siê\n"
 
-#: newrole/newrole.c:441
+#: newrole/newrole.c:456
 #, c-format
 msgid "%s is not a valid context\n"
 msgstr "%s nie jest poprawnym kontekstem\n"
 
-#: newrole/newrole.c:454
+#: newrole/newrole.c:469
 #, c-format
 msgid "Warning!  Could not retrieve tty information.\n"
 msgstr "Uwaga! Nie uda³o siê uzyskaæ informacji o tty.\n"
 
-#: newrole/newrole.c:460
+#: newrole/newrole.c:475
 #, c-format
 msgid "Warning!  Could not open %s.\n"
 msgstr "Uwaga! Nie uda³o siê otworzyæ %s.\n"
 
-#: newrole/newrole.c:466
+#: newrole/newrole.c:481
 #, c-format
 msgid "Warning!  Could not get current context for %s, not relabeling.\n"
 msgstr "Uwaga! Nie uda³o siê pobraæ aktualnego kontekstu dla %s, etykiety nie zmienione.\n"
 
-#: newrole/newrole.c:475
+#: newrole/newrole.c:490
 #, c-format
 msgid "Warning!  Could not get new context for %s, not relabeling.\n"
 msgstr "Uwaga! Nie uda³o siê pobraæ nowego kontekstu dla %s, etykiety nie zmienione.\n"
 
-#: newrole/newrole.c:484
+#: newrole/newrole.c:499
 #, c-format
 msgid "Warning!  Could not set new context for %s\n"
 msgstr "Uwaga! Nie uda³o siê ustawiæ nowego kontekstu dla %s\n"
 
-#: newrole/newrole.c:494
+#: newrole/newrole.c:509
 #, c-format
 msgid "newrole: failure forking: %s"
 msgstr "newrole: niepowodzenie fork: %s"
 
-#: newrole/newrole.c:510
+#: newrole/newrole.c:525
 #, c-format
 msgid "%s changed labels.\n"
 msgstr "Etykiety %s zmienione.\n"
 
-#: newrole/newrole.c:534
+#: newrole/newrole.c:549
 #, c-format
 msgid "Could not close descriptors.\n"
 msgstr "Nie uda³o siê zamkn±æ deskryptorów.\n"
 
-#: newrole/newrole.c:568 run_init/run_init.c:367
+#: newrole/newrole.c:583 run_init/run_init.c:369
 #, c-format
 msgid "Could not set exec context to %s.\n"
 msgstr "Nie uda³o siê ustawiæ kontekstu wykonywania na %s.\n"
 
 #. If we reach here, then we failed to exec the new shell.
-#: newrole/newrole.c:574
+#: newrole/newrole.c:589
 msgid "failed to exec shell\n"
 msgstr "uruchomienie pow³oki nie powiod³o siê\n"
 
 #. USAGE_STRING describes the command-line args of this program.
-#: run_init/run_init.c:59
+#: run_init/run_init.c:60
 msgid ""
 "USAGE: run_init <script> <args ...>\n"
 "  where: <script> is the name of the init script to run,\n"
@@ -183,27 +216,27 @@ msgstr ""
 "  gdzie: <skrypt> to nazwa skryptu init do uruchomienia,\n"
 "         <argumenty ...> to argumenty dla tego skryptu."
 
-#: run_init/run_init.c:245
+#: run_init/run_init.c:246
 #, c-format
 msgid "run_init: incorrect password for %s\n"
 msgstr "run_init: nieprawid³owe has³o dla u¿ytkownika %s\n"
 
-#: run_init/run_init.c:275
+#: run_init/run_init.c:277
 #, c-format
 msgid "Could not open file %s\n"
 msgstr "Nie uda³o siê otworzyæ pliku %s\n"
 
-#: run_init/run_init.c:302
+#: run_init/run_init.c:304
 #, c-format
 msgid "No context in file %s\n"
 msgstr "Brak kontekstu w pliku %s\n"
 
-#: run_init/run_init.c:322
+#: run_init/run_init.c:324
 #, c-format
 msgid "Sorry, run_init may be used only on a SELinux kernel.\n"
 msgstr "Niestety run_init mo¿e byæ u¿ywany tylko z j±drem SELinux.\n"
 
-#: run_init/run_init.c:341
+#: run_init/run_init.c:343
 #, c-format
 msgid "authentication failed.\n"
 msgstr "uwierzytelnienie nie powiod³o siê.\n"
