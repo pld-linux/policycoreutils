@@ -3,13 +3,14 @@ Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.6
-Release:	1
+Release:	2
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
 # Source0-md5:	be5a8cb948137e86ea02b6d72dd0a405
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
+Source3:	%{name}-pl.po
 Patch0:		%{name}-sh.patch
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
@@ -70,12 +71,12 @@ Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu.
 %setup -q
 %patch0 -p1
 
+cp -f %{SOURCE3} po/pl.po
+
 %build
-# CFLAGS must be passed in environment, not as make argument
-# (because of CFLAGS+=...)
-CFLAGS="%{rpmcflags}" \
 %{__make} \
-	CC="%{__cc}"
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
