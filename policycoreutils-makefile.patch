@@ -1,0 +1,75 @@
+diff -Nur policycoreutils-1.0/load_policy/Makefile policycoreutils-1.0.new/load_policy/Makefile
+--- policycoreutils-1.0/load_policy/Makefile	2003-06-03 22:50:56.000000000 +0200
++++ policycoreutils-1.0.new/load_policy/Makefile	2003-06-18 19:42:18.000000000 +0200
+@@ -6,7 +6,7 @@
+ LDLIBS += -lselinux
+ 
+ # Build static so that we can put it on an initrd.
+-LDFLAGS += -static
++LDFLAGS += 
+ 
+ TARGETS=$(patsubst %.c,%,$(wildcard *.c))
+ 
+diff -Nur policycoreutils-1.0/newrole/Makefile policycoreutils-1.0.new/newrole/Makefile
+--- policycoreutils-1.0/newrole/Makefile	2003-06-12 21:27:39.000000000 +0200
++++ policycoreutils-1.0.new/newrole/Makefile	2003-06-18 19:39:29.000000000 +0200
+@@ -12,11 +12,11 @@
+ all: $(TARGETS)
+ 
+ install: all
+-	test -d $(BINDIR)      || install -m 755 -o root -g root -d $(BINDIR)
+-	test -d $(MANDIR)/man1 || install -m 755 -o root -g root -d $(MANDIR)/man1
+-	install -m 555 -o root -g root newrole $(BINDIR)
+-	install -m 644 -o root -g root newrole.1 $(MANDIR)/man1/
+-	install -m 644 -o root -g root newrole.pamd $(ETCDIR)/pam.d/newrole
++	test -d $(BINDIR)      || install -m 755 -d $(BINDIR)
++	test -d $(MANDIR)/man1 || install -m 755 -d $(MANDIR)/man1
++	install -m 555 newrole $(BINDIR)
++	install -m 644 newrole.1 $(MANDIR)/man1/
++	install -m 644 newrole.pamd $(ETCDIR)/pam.d/newrole
+ 
+ clean:
+ 	rm -f $(TARGETS) *.o 
+diff -Nur policycoreutils-1.0/newrole/newrole.c policycoreutils-1.0.new/newrole/newrole.c
+--- policycoreutils-1.0/newrole/newrole.c	2003-06-13 16:15:54.000000000 +0200
++++ policycoreutils-1.0.new/newrole/newrole.c	2003-06-18 19:44:08.000000000 +0200
+@@ -57,6 +57,7 @@
+ #include <getopt.h>               /* for getopt_long() form of getopt() */
+ #include <fcntl.h>
+ #include <string.h>
++#include <errno.h>
+ #include <selinux/selinux.h>      /* for is_selinux_enabled() */
+ #include <selinux/flask.h>        /* for SECCLASS_CHR_FILE */
+ #include <selinux/context.h>      /* for context-mangling functions */
+diff -Nur policycoreutils-1.0/run_init/Makefile policycoreutils-1.0.new/run_init/Makefile
+--- policycoreutils-1.0/run_init/Makefile	2003-06-12 21:27:40.000000000 +0200
++++ policycoreutils-1.0.new/run_init/Makefile	2003-06-18 19:40:12.000000000 +0200
+@@ -12,11 +12,11 @@
+ all: $(TARGETS)
+ 
+ install: all
+-	test -d $(SBINDIR)      || install -m 755 -o root -g root -d $(SBINDIR)
+-	test -d $(MANDIR)/man1 || install -m 755 -o root -g root -d $(MANDIR)/man1
+-	install -m 555 -o root -g root run_init $(SBINDIR)
+-	install -m 644 -o root -g root run_init.8 $(MANDIR)/man8/
+-	install -m 644 -o root -g root run_init.pamd $(ETCDIR)/pam.d/run_init
++	test -d $(SBINDIR)      || install -m 755 -d $(SBINDIR)
++	test -d $(MANDIR)/man1 || install -m 755 -d $(MANDIR)/man1
++	install -m 555 run_init $(SBINDIR)
++	install -m 644 run_init.8 $(MANDIR)/man8/
++	install -m 644 run_init.pamd $(ETCDIR)/pam.d/run_init
+ 
+ clean:
+ 	rm -f $(TARGETS) *.o 
+diff -Nur policycoreutils-1.0/setfiles/Makefile policycoreutils-1.0.new/setfiles/Makefile
+--- policycoreutils-1.0/setfiles/Makefile	2003-06-03 22:51:04.000000000 +0200
++++ policycoreutils-1.0.new/setfiles/Makefile	2003-06-18 19:40:29.000000000 +0200
+@@ -15,7 +15,7 @@
+ 	[ -d $(MANDIR)/man8 ] || mkdir -p $(MANDIR)/man8
+ 	-mkdir -p $(SBINDIR)
+ 	install -m 755 setfiles $(SBINDIR)
+-	install -m 644 -o root -g root setfiles.8 $(MANDIR)/man8
++	install -m 644 setfiles.8 $(MANDIR)/man8
+ 
+ clean:
+ 	rm -f setfiles *.o 
