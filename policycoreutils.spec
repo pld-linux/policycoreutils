@@ -2,21 +2,21 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.18
+Version:	1.20
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	5bba6fb1c02f9d3aba37cb55f3aebd64
+# Source0-md5:	21c7265641ef35278aa935afe255447a
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel >= 0:1.16
+BuildRequires:	libselinux-devel >= 0:1.20
 BuildRequires:	libsepol-devel >= 1.2
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
-Requires:	libselinux >= 0:1.16
+Requires:	libselinux >= 0:1.20
 Requires:	libsepol >= 1.2
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
