@@ -2,12 +2,12 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.10
+Version:	1.12
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	50c449595b8d415e2e00afd1bea2abe0
+# Source0-md5:	db69756ca36d460ebe2fc0fd7cdbf2b9
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
