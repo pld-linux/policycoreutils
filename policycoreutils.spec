@@ -1,8 +1,9 @@
+%include        /usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.4
-Release:	2
+Release:	3
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
@@ -11,6 +12,7 @@ Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 BuildRequires:	libselinux-devel
 BuildRequires:	pam-devel
+BuildRequires:	rpm-perlprov
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,6 +51,18 @@ load_policy do wczytywania polityki, setfiles do znaczenia systemu
 plików, newrole do prze³±czania ról i run_init do uruchamiania we
 w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
 
+%package tools-perl
+Summary:        policycoreutils tools written in perl
+Summary(pl):    Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu
+Group:          Base
+Requires:       %{name} = %{version}
+
+%description tools-perl
+policycoreutils tools written in perl.
+
+%description tools-perl -l pl
+Zestaw narzêdzi i skryptów policycoreutils napisanych w perlu.
+
 %prep
 %setup -q
 
@@ -81,10 +95,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/run_init
-# perl script
-#%attr(755,root,root) %{_bindir}/audit2allow
-%attr(755,root,root) %{_bindir}/newrole
+%attr(4755,root,root) %{_bindir}/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
 %config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/*
 %{_mandir}/man[18]/*
+
+%files tools-perl
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/audit2allow
