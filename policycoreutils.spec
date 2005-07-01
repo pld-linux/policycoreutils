@@ -2,22 +2,22 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.22
+Version:	1.24
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	478ab461726e06dcce2a47cab1f79d22
+# Source0-md5:	9ee11eb7ba48a5f491710126d40c7295
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel >= 0:1.22
-BuildRequires:	libsepol-devel >= 1.4
+BuildRequires:	libselinux-devel >= 0:1.24
+BuildRequires:	libsepol-devel >= 1.6
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
-Requires:	libselinux >= 0:1.22
-Requires:	libsepol >= 1.4
+Requires:	libselinux >= 0:1.24
+Requires:	libsepol >= 1.6
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -102,16 +102,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/newrole
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
+%attr(755,root,root) %{_sbindir}/audit2why
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/sestatus
-%config(noreplace) %verify(not size mtime md5) /etc/pam.d/newrole
-%config(noreplace) %verify(not size mtime md5) /etc/pam.d/run_init
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/*
-%config(noreplace) %verify(not size mtime md5) /etc/sestatus.conf
+%config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
 %{_mandir}/man[18]/*
 
 %files tools-perl
