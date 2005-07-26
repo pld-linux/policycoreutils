@@ -13,11 +13,13 @@ Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel >= 0:1.24
-BuildRequires:	libsepol-devel >= 1.6
+BuildRequires:	libsepol-static >= 1.6
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
+BuildRequires:	rpm-pythonprov
 Requires:	libselinux >= 0:1.24
 Requires:	libsepol >= 1.6
+Requires:	python
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
