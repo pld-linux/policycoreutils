@@ -2,23 +2,24 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.24
-Release:	1
+Version:	1.26
+Release:	0.1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	9ee11eb7ba48a5f491710126d40c7295
+# Source0-md5:	3d4468916b998859fc82aa333790e6d8
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel >= 0:1.24
-BuildRequires:	libsepol-static >= 1.6
+BuildRequires:	libselinux-devel >= 0:1.26
+BuildRequires:	libsepol-static >= 1.8
+BuildRequires:	libsemanage-static
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-Requires:	libselinux >= 0:1.24
-Requires:	libsepol >= 1.6
+Requires:	libselinux >= 0:1.26
+Requires:	libsepol >= 1.8
 Requires:	python
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -79,7 +80,8 @@ cp -f %{SOURCE3} po/pl.po
 %build
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}"
+	CFLAGS="%{rpmcflags}" \
+	LIBDIR="%{_libdir}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
