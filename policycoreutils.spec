@@ -104,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog
 %attr(4755,root,root) %{_bindir}/newrole
+%attr(4755,root,root) %{_bindir}/semodule_*
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) %{_sbindir}/audit2why
@@ -111,6 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
+%attr(755,root,root) %{_sbindir}/semodule
 %attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/sestatus
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
