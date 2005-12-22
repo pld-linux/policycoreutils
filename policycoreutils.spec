@@ -2,24 +2,24 @@
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.26
-Release:	0.1
+Version:	1.28
+Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	3d4468916b998859fc82aa333790e6d8
+# Source0-md5:	45061fa490efac5926ecc8de9e3ef864
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel >= 0:1.26
-BuildRequires:	libsepol-static >= 1.8
-BuildRequires:	libsemanage-static
+BuildRequires:	libselinux-devel >= 0:1.28
+BuildRequires:	libsemanage-devel >= 1.4
+BuildRequires:	libsepol-static >= 1.10
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-Requires:	libselinux >= 0:1.26
-Requires:	libsepol >= 1.8
+Requires:	libselinux >= 0:1.28
+Requires:	libsemanage >= 1.4
 Requires:	python
 Requires:	python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -112,8 +112,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
+%attr(755,root,root) %{_sbindir}/semanage
 %attr(755,root,root) %{_sbindir}/semodule
 %attr(755,root,root) %{_sbindir}/setfiles
+%attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
