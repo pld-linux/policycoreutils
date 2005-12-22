@@ -22,6 +22,7 @@ Requires:	libselinux >= 0:1.28
 Requires:	libsemanage >= 1.4
 Requires:	python
 Requires:	python-modules
+Requires:	python-semanage >= 1.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
