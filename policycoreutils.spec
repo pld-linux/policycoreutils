@@ -1,3 +1,4 @@
+# TODO: PLDify init.d/restorecond (uses bashisms instead of our nls), add chkconfig when ready
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
@@ -101,7 +102,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
 
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
-rm -f $RPM_BUILD_ROOT%{py_sitescriptdir}/*.py
+%py_postclean
 
 %find_lang %{name}
 
@@ -113,25 +114,30 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog
 %attr(4755,root,root) %{_bindir}/chcat
 %attr(4755,root,root) %{_bindir}/newrole
+%attr(4755,root,root) %{_bindir}/secon
 %attr(4755,root,root) %{_bindir}/semodule_*
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
+%attr(755,root,root) /sbin/setfiles
 %attr(755,root,root) %{_sbindir}/audit2why
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
+%attr(755,root,root) %{_sbindir}/restorecond
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/semanage
 %attr(755,root,root) %{_sbindir}/semodule
-%attr(755,root,root) %{_sbindir}/setfiles
 %attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
-%{py_sitescriptdir}/seobject.py[co]
+%{py_sitescriptdir}/*.py[co]
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
+%attr(754,root,root) /etc/rc.d/init.d/restorecond
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond.conf
 %config(missingok) /etc/security/console.apps/*
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
 %{_mandir}/man1/newrole.1*
+%{_mandir}/man1/secon.1*
 %{_mandir}/man8/*
 
 %files tools-perl
