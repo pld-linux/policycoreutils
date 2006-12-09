@@ -76,6 +76,25 @@ policycoreutils tools written in Perl.
 %description tools-perl -l pl
 Zestaw narzêdzi i skryptów policycoreutils napisanych w Perlu.
 
+%package restorecond
+Summary:	restorecond - daemon which corrects contexts of newly created files
+Summary(pl):	restorecond - demon poprawiaj±cy konteksty nowo tworzonych plików
+Group:		Daemons
+Requires:	%{name} = %{version}-%{release}
+Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
+
+%description restorecond
+restorecond daemon uses inotify to watch files listed in the
+/etc/selinux/restorecond.conf, when they are created, this daemon will
+make sure they have the correct file context associated with the
+policy.
+
+%description restorecond -l pl
+Demon restorecond u¿ywa inotify do ¶ledzenia plików wymienionych w
+pliku /etc/selinux/restorecond.conf, aby przy ich tworzeniu upewniæ
+siê, ¿e maj± przypisane w³a¶ciwe konteksty plików z polityki.
+
 %prep
 %setup -q
 
@@ -123,7 +142,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
-%attr(755,root,root) %{_sbindir}/restorecond
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/semanage
 %attr(755,root,root) %{_sbindir}/semodule
@@ -132,15 +150,32 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitescriptdir}/*.py[co]
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
-%attr(754,root,root) /etc/rc.d/init.d/restorecond
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond.conf
 %config(missingok) /etc/security/console.apps/*
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
 %{_mandir}/man1/newrole.1*
 %{_mandir}/man1/secon.1*
-%{_mandir}/man8/*
+%{_mandir}/man8/audit2why.8*
+%{_mandir}/man8/chcat.8*
+%{_mandir}/man8/fixfiles.8*
+%{_mandir}/man8/genhomedircon.8*
+%{_mandir}/man8/load_policy.8*
+%{_mandir}/man8/open_init_pty.8*
+%{_mandir}/man8/restorecon.8*
+%{_mandir}/man8/run_init.8*
+%{_mandir}/man8/semanage.8*
+%{_mandir}/man8/semodule*.8*
+%{_mandir}/man8/sestatus.8*
+%{_mandir}/man8/setfiles.8*
+%{_mandir}/man8/setsebool.8*
 
 %files tools-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/audit2allow
 %{_mandir}/man1/audit2allow.1*
+
+%files restorecond
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/restorecond
+%attr(754,root,root) /etc/rc.d/init.d/restorecond
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond.conf
+%{_mandir}/man8/restorecond.8*
