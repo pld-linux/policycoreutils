@@ -1,10 +1,10 @@
-# TODO: PLDify init.d/restorecond (uses bashisms instead of our nls), add chkconfig when ready
+# TODO: PLDify init.d/restorecond (uses bashisms instead of our nls)
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.32
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
@@ -127,6 +127,16 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post restorecond
+/sbin/chkconfig --add restorecond
+%service restorecond restart
+
+%preun restorecond
+if [ "$1" = "0" ]; then
+	%service restorecond stop
+	/sbin/chkconfig --del restorecond
+fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
