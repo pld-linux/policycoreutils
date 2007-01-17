@@ -1,14 +1,14 @@
 # TODO: PLDify init.d/restorecond (uses bashisms instead of our nls)
 #
 # Conditional build:
-%bcond_without  restorecond   # don't build restorecond (glibc>2.4)
+%bcond_with	restorecond	# build restorecond (glibc>2.4)
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.32
-Release:	0.2
+Release:	1
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
