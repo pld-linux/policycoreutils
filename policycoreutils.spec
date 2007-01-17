@@ -1,4 +1,8 @@
 # TODO: PLDify init.d/restorecond (uses bashisms instead of our nls)
+#
+# Conditional build:
+%bcond_without  restorecond   # don't build restorecond (glibc>2.4)
+#
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
 Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
@@ -14,7 +18,7 @@ Source2:	%{name}-run_init.pamd
 Source3:	%{name}-pl.po
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glibc-devel >= 6:2.4
+%{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libselinux-devel >= 0:1.32
 BuildRequires:	libsemanage-devel >= 1.8
 BuildRequires:	libsepol-static >= 1.14
@@ -99,6 +103,7 @@ siê, ¿e maj± przypisane w³a¶ciwe konteksty plików z polityki.
 %setup -q
 
 cp -f %{SOURCE3} po/pl.po
+%{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 
 %build
 %{__make} \
@@ -183,9 +188,11 @@ fi
 %attr(755,root,root) %{_bindir}/audit2allow
 %{_mandir}/man1/audit2allow.1*
 
+%if %{with restorecond}
 %files restorecond
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/restorecond
 %attr(754,root,root) /etc/rc.d/init.d/restorecond
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond.conf
 %{_mandir}/man8/restorecond.8*
+%endif
