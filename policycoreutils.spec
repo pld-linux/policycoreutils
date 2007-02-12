@@ -5,7 +5,7 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
-Summary(pl):	Podstawowe narzêdzia dla polityki SELinux
+Summary(pl.UTF-8):   Podstawowe narzÄ™dzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.34.1
 Release:	0.2
@@ -49,40 +49,40 @@ load_policy to load policies, setfiles to label filesystems, newrole
 to switch roles, and run_init to run /etc/init.d scripts in the proper
 context.
 
-%description -l pl
-Security-enhanced Linux jest prototypem j±dra Linuksa i wielu
-aplikacji u¿ytkowych o funkcjach podwy¿szonego bezpieczeñstwa.
-Zaprojektowany jest tak, aby w prosty sposób ukazaæ znaczenie
-obowi±zkowej kontroli dostêpu dla spo³eczno¶ci linuksowej. Ukazuje
-równie¿ jak tak± kontrolê mo¿na dodaæ do istniej±cego systemu typu
-Linux. J±dro SELinux zawiera nowe sk³adniki architektury pierwotnie
-opracowane w celu ulepszenia bezpieczeñstwa systemu operacyjnego
-Flask. Te elementy zapewniaj± ogólne wsparcie we wdra¿aniu wielu typów
-polityk obowi±zkowej kontroli dostêpu, w³±czaj±c te wzorowane na: Type
-Enforcement (TE), kontroli dostêpu opartej na rolach (RBAC) i
+%description -l pl.UTF-8
+Security-enhanced Linux jest prototypem jÄ…dra Linuksa i wielu
+aplikacji uÅ¼ytkowych o funkcjach podwyÅ¼szonego bezpieczeÅ„stwa.
+Zaprojektowany jest tak, aby w prosty sposÃ³b ukazaÄ‡ znaczenie
+obowiÄ…zkowej kontroli dostÄ™pu dla spoÅ‚ecznoÅ›ci linuksowej. Ukazuje
+rÃ³wnieÅ¼ jak takÄ… kontrolÄ™ moÅ¼na dodaÄ‡ do istniejÄ…cego systemu typu
+Linux. JÄ…dro SELinux zawiera nowe skÅ‚adniki architektury pierwotnie
+opracowane w celu ulepszenia bezpieczeÅ„stwa systemu operacyjnego
+Flask. Te elementy zapewniajÄ… ogÃ³lne wsparcie we wdraÅ¼aniu wielu typÃ³w
+polityk obowiÄ…zkowej kontroli dostÄ™pu, wÅ‚Ä…czajÄ…c te wzorowane na: Type
+Enforcement (TE), kontroli dostÄ™pu opartej na rolach (RBAC) i
 zabezpieczeniach wielopoziomowych.
 
-policycoreutils zawiera narzêdzia do ustalania polityki, które s±
-niezbêdne do podstawowych operacji na systemie SELinux. Pakiet zawiera
+policycoreutils zawiera narzÄ™dzia do ustalania polityki, ktÃ³re sÄ…
+niezbÄ™dne do podstawowych operacji na systemie SELinux. Pakiet zawiera
 load_policy do wczytywania polityki, setfiles do znaczenia systemu
-plików, newrole do prze³±czania ról i run_init do uruchamiania we
-w³a¶ciwym kontek¶cie skryptów zawartych w /etc/rc.d/init.d.
+plikÃ³w, newrole do przeÅ‚Ä…czania rÃ³l i run_init do uruchamiania we
+wÅ‚aÅ›ciwym kontekÅ›cie skryptÃ³w zawartych w /etc/rc.d/init.d.
 
 %package tools-perl
 Summary:	policycoreutils tools written in Perl
-Summary(pl):	Zestaw narzêdzi i skryptów policycoreutils napisanych w Perlu
+Summary(pl.UTF-8):   Zestaw narzÄ™dzi i skryptÃ³w policycoreutils napisanych w Perlu
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
 %description tools-perl
 policycoreutils tools written in Perl.
 
-%description tools-perl -l pl
-Zestaw narzêdzi i skryptów policycoreutils napisanych w Perlu.
+%description tools-perl -l pl.UTF-8
+Zestaw narzÄ™dzi i skryptÃ³w policycoreutils napisanych w Perlu.
 
 %package restorecond
 Summary:	restorecond - daemon which corrects contexts of newly created files
-Summary(pl):	restorecond - demon poprawiaj±cy konteksty nowo tworzonych plików
+Summary(pl.UTF-8):   restorecond - demon poprawiajÄ…cy konteksty nowo tworzonych plikÃ³w
 Group:		Daemons
 Requires:	%{name} = %{version}-%{release}
 Requires(post,preun):	/sbin/chkconfig
@@ -94,10 +94,10 @@ restorecond daemon uses inotify to watch files listed in the
 make sure they have the correct file context associated with the
 policy.
 
-%description restorecond -l pl
-Demon restorecond u¿ywa inotify do ¶ledzenia plików wymienionych w
-pliku /etc/selinux/restorecond.conf, aby przy ich tworzeniu upewniæ
-siê, ¿e maj± przypisane w³a¶ciwe konteksty plików z polityki.
+%description restorecond -l pl.UTF-8
+Demon restorecond uÅ¼ywa inotify do Å›ledzenia plikÃ³w wymienionych w
+pliku /etc/selinux/restorecond.conf, aby przy ich tworzeniu upewniÄ‡
+siÄ™, Å¼e majÄ… przypisane wÅ‚aÅ›ciwe konteksty plikÃ³w z polityki.
 
 %prep
 %setup -q
