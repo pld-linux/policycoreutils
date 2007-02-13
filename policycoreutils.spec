@@ -5,7 +5,7 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
-Summary(pl.UTF-8):   Podstawowe narzędzia dla polityki SELinux
+Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
 Version:	1.34.1
 Release:	0.2
@@ -70,7 +70,7 @@ właściwym kontekście skryptów zawartych w /etc/rc.d/init.d.
 
 %package tools-perl
 Summary:	policycoreutils tools written in Perl
-Summary(pl.UTF-8):   Zestaw narzędzi i skryptów policycoreutils napisanych w Perlu
+Summary(pl.UTF-8):	Zestaw narzędzi i skryptów policycoreutils napisanych w Perlu
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
@@ -82,7 +82,7 @@ Zestaw narzędzi i skryptów policycoreutils napisanych w Perlu.
 
 %package restorecond
 Summary:	restorecond - daemon which corrects contexts of newly created files
-Summary(pl.UTF-8):   restorecond - demon poprawiający konteksty nowo tworzonych plików
+Summary(pl.UTF-8):	restorecond - demon poprawiający konteksty nowo tworzonych plików
 Group:		Daemons
 Requires:	%{name} = %{version}-%{release}
 Requires(post,preun):	/sbin/chkconfig
