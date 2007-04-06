@@ -7,29 +7,32 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	1.34.1
+Version:	2.0.7
 Release:	0.2
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	0093c79c019be901123f8045cea60417
+# Source0-md5:	4a2a0ba905892a8c0161ffbb341c2bc7
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
-Source3:	%{name}-pl.po
+Patch0:		%{name}-pl.po-update.patch
+URL:		http://www.nsa.gov/selinux/
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
-BuildRequires:	libselinux-devel >= 0:1.34
-BuildRequires:	libsemanage-devel >= 1.8
-BuildRequires:	libsepol-static >= 1.14
+BuildRequires:	libselinux-devel >= 0:2.0
+BuildRequires:	libsemanage-devel >= 2.0
+BuildRequires:	libsepol-static >= 2.0
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-Requires:	libselinux >= 0:1.34
-Requires:	libsemanage >= 1.8
+Requires:	libselinux >= 0:2.0
+Requires:	libsemanage >= 2.0
 Requires:	python
 Requires:	python-modules
-Requires:	python-semanage >= 1.8
+Requires:	python-semanage >= 2.0
+# for audit2allow
+Requires:	python-sepolgen
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -101,8 +104,8 @@ się, że mają przypisane właściwe konteksty plików z polityki.
 
 %prep
 %setup -q
+%patch0 -p1
 
-cp -f %{SOURCE3} po/pl.po
 %{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 
 %build
@@ -146,10 +149,11 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog
-%attr(4755,root,root) %{_bindir}/chcat
+%attr(755,root,root) %{_bindir}/chcat
 %attr(4755,root,root) %{_bindir}/newrole
-%attr(4755,root,root) %{_bindir}/secon
-%attr(4755,root,root) %{_bindir}/semodule_*
+%attr(755,root,root) %{_bindir}/secon
+%attr(755,root,root) %{_bindir}/semodule_*
+%attr(755,root,root) %{_bindir}/sepolgen-ifgen
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) /sbin/setfiles
