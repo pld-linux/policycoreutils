@@ -7,12 +7,12 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.7
+Version:	2.0.27
 Release:	0.2
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	4a2a0ba905892a8c0161ffbb341c2bc7
+# Source0-md5:	8012983792fca9f4fea6ce5e381ecafd
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-pl.po-update.patch
@@ -20,14 +20,14 @@ URL:		http://www.nsa.gov/selinux/
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
-BuildRequires:	libselinux-devel >= 0:2.0
-BuildRequires:	libsemanage-devel >= 2.0
+BuildRequires:	libselinux-devel >= 0:2.0.35
+BuildRequires:	libsemanage-devel >= 2.0.9
 BuildRequires:	libsepol-static >= 2.0
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-Requires:	libselinux >= 0:2.0
-Requires:	libsemanage >= 2.0
+Requires:	libselinux >= 0:2.0.35
+Requires:	libsemanage >= 2.0.9
 Requires:	python
 Requires:	python-modules
 Requires:	python-semanage >= 2.0
@@ -149,6 +149,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog
+%attr(755,root,root) %{_bindir}/audit2why
 %attr(755,root,root) %{_bindir}/chcat
 %attr(4755,root,root) %{_bindir}/newrole
 %attr(755,root,root) %{_bindir}/secon
@@ -157,8 +158,6 @@ fi
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) /sbin/setfiles
-%attr(755,root,root) %{_sbindir}/audit2why
-%attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
@@ -176,7 +175,6 @@ fi
 %{_mandir}/man8/audit2why.8*
 %{_mandir}/man8/chcat.8*
 %{_mandir}/man8/fixfiles.8*
-%{_mandir}/man8/genhomedircon.8*
 %{_mandir}/man8/load_policy.8*
 %{_mandir}/man8/open_init_pty.8*
 %{_mandir}/man8/restorecon.8*
