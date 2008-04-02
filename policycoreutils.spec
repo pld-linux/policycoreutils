@@ -7,12 +7,12 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.27
+Version:	2.0.44
 Release:	0.2
 License:	GPL
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	8012983792fca9f4fea6ce5e381ecafd
+# Source0-md5:	6572053fa4c436a44b98d2206ae8585f
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-pl.po-update.patch
@@ -22,7 +22,7 @@ BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libselinux-devel >= 0:2.0.35
 BuildRequires:	libsemanage-devel >= 2.0.9
-BuildRequires:	libsepol-static >= 2.0
+BuildRequires:	libsepol-static >= 2.0.25
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
@@ -158,6 +158,7 @@ fi
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) /sbin/setfiles
+%attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
@@ -172,7 +173,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
 %{_mandir}/man1/newrole.1*
 %{_mandir}/man1/secon.1*
-%{_mandir}/man8/audit2why.8*
+%{_mandir}/man1/audit2why.1*
 %{_mandir}/man8/chcat.8*
 %{_mandir}/man8/fixfiles.8*
 %{_mandir}/man8/load_policy.8*
