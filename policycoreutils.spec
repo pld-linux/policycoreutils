@@ -7,12 +7,13 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.44
+Version:	2.0.49
 Release:	1
-License:	GPL
+# some parts strictly v2, some v2+
+License:	GPL v2
 Group:		Base
 Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	6572053fa4c436a44b98d2206ae8585f
+# Source0-md5:	0ea32d8f1036916d28d9c43fe577e9d2
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-pl.po-update.patch
@@ -26,6 +27,7 @@ BuildRequires:	libsepol-static >= 2.0.25
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
+%{!?with_restorecond:BuildRequires:	sed >= 4.0}
 Requires:	libselinux >= 0:2.0.35
 Requires:	libsemanage >= 2.0.9
 Requires:	python
