@@ -8,7 +8,7 @@ Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
 Version:	2.0.49
-Release:	1
+Release:	2
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Base
