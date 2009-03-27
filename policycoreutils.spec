@@ -7,17 +7,17 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.49
-Release:	3
+Version:	2.0.55
+Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Base
-Source0:	http://www.nsa.gov/selinux/archives/%{name}-%{version}.tgz
-# Source0-md5:	0ea32d8f1036916d28d9c43fe577e9d2
+Source0:	http://userspace.selinuxproject.org/releases/20080909/devel/%{name}-%{version}.tar.gz
+# Source0-md5:	ac4cd1f2f5bb507f57c2b1d6e65a59f4
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-pl.po-update.patch
-URL:		http://www.nsa.gov/selinux/
+URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
