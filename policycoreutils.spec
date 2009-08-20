@@ -14,7 +14,7 @@ License:	GPL v2
 Group:		Base
 #git http://oss.tresys.com/git/selinux.git/
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	f70ed1e8336cc73ff4ede89bf5297c0d
+# Source0-md5:	9a8e70318b2fab31a5dda04be1f129f3
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-gui.patch
