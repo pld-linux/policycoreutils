@@ -7,14 +7,14 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.71
+Version:	2.0.73
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Base
-#git http://oss.tresys.com/git/selinux.git/
+#git clone http://oss.tresys.com/git/selinux.git/
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	9a8e70318b2fab31a5dda04be1f129f3
+# Source0-md5:	cd911abd73a406a656437c4f11f57054
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-gui.patch
