@@ -7,14 +7,14 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.74
+Version:	2.0.78
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Base
 #git clone http://oss.tresys.com/git/selinux.git/
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	23daf366a1976473e414402c91c2db4b
+# Source0-md5:	4cfb719171e3f723afec09654a8df233
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-gui.patch
@@ -39,8 +39,8 @@ Requires:	python-sepolgen
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Security-enhanced Linux is a patch of the Linux kernel and a number
-of utilities with enhanced security functionality designed to add
+Security-enhanced Linux is a patch of the Linux kernel and a number of
+utilities with enhanced security functionality designed to add
 mandatory access controls to Linux. The Security-enhanced Linux kernel
 contains new architectural components originally developed to improve
 the security of the Flask operating system. These architectural
@@ -90,8 +90,8 @@ Zestaw narzędzi i skryptów policycoreutils napisanych w Perlu.
 Summary:	restorecond - daemon which corrects contexts of newly created files
 Summary(pl.UTF-8):	restorecond - demon poprawiający konteksty nowo tworzonych plików
 Group:		Daemons
-Requires:	%{name} = %{version}-%{release}
 Requires(post,preun):	/sbin/chkconfig
+Requires:	%{name} = %{version}-%{release}
 Requires:	rc-scripts
 
 %description restorecond
@@ -159,6 +159,7 @@ fi
 %attr(755,root,root) %{_bindir}/semodule_*
 %attr(755,root,root) %{_bindir}/sepolgen-ifgen
 %attr(755,root,root) /sbin/fixfiles
+%attr(755,root,root) /sbin/load_policy
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) /sbin/setfiles
 %attr(755,root,root) %{_sbindir}/genhomedircon
