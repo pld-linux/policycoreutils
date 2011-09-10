@@ -7,30 +7,31 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.0.82
-Release:	4
+Version:	2.1.0
+Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Base
 #git clone http://oss.tresys.com/git/selinux.git/
-Source0:	http://userspace.selinuxproject.org/releases/current/devel/%{name}-%{version}.tar.gz
-# Source0-md5:	ebfcf14e98384bdafb16be7902292b2c
+Source0:	http://userspace.selinuxproject.org/releases/20110727/devel/policycoreutils-2.1.0.tar.gz
+# Source0-md5:	f418384ea5bc57080a6ace843646aba9
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-gui.patch
+Patch1:		%{name}-build.patch
 URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
-BuildRequires:	libselinux-devel >= 0:2.0.35
-BuildRequires:	libsemanage-devel >= 2.0.31
-BuildRequires:	libsepol-static >= 2.0.25
+BuildRequires:	libselinux-devel >= 0:2.1.0
+BuildRequires:	libsemanage-devel >= 2.1.0
+BuildRequires:	libsepol-static >= 2.1.0
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
-Requires:	libselinux >= 0:2.0.35
-Requires:	libsemanage >= 2.0.9
+Requires:	libselinux >= 0:2.1.0
+Requires:	libsemanage >= 2.1.0
 Requires:	python
 Requires:	python-modules
 Requires:	python-semanage >= 2.0
@@ -108,13 +109,14 @@ się, że mają przypisane właściwe konteksty plików z polityki.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 
 %build
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}" \
+	CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	LIBDIR="%{_libdir}"
 
 %install
@@ -155,6 +157,7 @@ fi
 %attr(755,root,root) %{_bindir}/audit2why
 %attr(755,root,root) %{_bindir}/chcat
 %attr(4755,root,root) %{_bindir}/newrole
+%attr(755,root,root) %{_bindir}/sandbox
 %attr(755,root,root) %{_bindir}/secon
 %attr(755,root,root) %{_bindir}/semodule_*
 %attr(755,root,root) %{_bindir}/sepolgen-ifgen
@@ -170,11 +173,14 @@ fi
 %attr(755,root,root) %{_sbindir}/semodule
 %attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
+%attr(755,root,root) %{_sbindir}/seunshare
 %{py_sitescriptdir}/*.py[co]
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/*
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
+%dir %{_datadir}/sandbox
+%attr(755,root,root) %{_datadir}/sandbox/*.sh
 %{_mandir}/man1/newrole.1*
 %{_mandir}/man1/secon.1*
 %{_mandir}/man1/audit2why.1*
@@ -184,6 +190,7 @@ fi
 %{_mandir}/man8/open_init_pty.8*
 %{_mandir}/man8/restorecon.8*
 %{_mandir}/man8/run_init.8*
+%{_mandir}/man8/sandbox.8*
 %{_mandir}/man8/semanage.8*
 %{_mandir}/man8/semodule*.8*
 %{_mandir}/man8/sestatus.8*
