@@ -1,4 +1,6 @@
-# TODO: PLDify init.d/restorecond (uses bashisms instead of our nls)
+# TODO:
+# - PLDify init.d/restorecond (uses bashisms instead of our nls)
+# - PLDify and package init.d/sandbox script
 #
 # Conditional build:
 %bcond_without  restorecond   # don't build restorecond (glibc>2.4)
@@ -23,14 +25,14 @@ URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
-BuildRequires:	libselinux-devel >= 0:2.1.0
+BuildRequires:	libselinux-devel >= 2.1.0
 BuildRequires:	libsemanage-devel >= 2.1.0
 BuildRequires:	libsepol-static >= 2.1.0
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
-Requires:	libselinux >= 0:2.1.0
+Requires:	libselinux >= 2.1.0
 Requires:	libsemanage >= 2.1.0
 Requires:	python
 Requires:	python-modules
