@@ -25,6 +25,7 @@ URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
+BuildRequires:	libcgroup-devel
 BuildRequires:	libselinux-devel >= 2.1.9
 BuildRequires:	libsemanage-devel >= 2.1.6
 BuildRequires:	libsepol-static >= 2.1.4
