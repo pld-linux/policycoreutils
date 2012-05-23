@@ -1,6 +1,6 @@
 # TODO:
 # - PLDify init.d/restorecond (uses bashisms instead of our nls)
-# - PLDify and package init.d/sandbox script
+# - PLDify and package init.d/sandbox script; sandbox to subpackage? (seems to use python+pygtk)
 #
 # Conditional build:
 %bcond_without  restorecond   # don't build restorecond (glibc>2.4)
@@ -20,7 +20,6 @@ Source0:	http://userspace.selinuxproject.org/releases/20120216/%{name}-%{version
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-gui.patch
-Patch1:		%{name}-build.patch
 URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
@@ -112,7 +111,6 @@ się, że mają przypisane właściwe konteksty plików z polityki.
 %prep
 %setup -q
 %patch0 -p1
-#patch1 -p1
 
 %{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 
@@ -164,6 +162,7 @@ fi
 %attr(755,root,root) %{_bindir}/secon
 %attr(755,root,root) %{_bindir}/semodule_*
 %attr(755,root,root) %{_bindir}/sepolgen-ifgen
+%attr(755,root,root) %{_bindir}/sepolgen-ifgen-attr-helper
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/load_policy
 %attr(755,root,root) /sbin/restorecon
@@ -178,16 +177,23 @@ fi
 %attr(755,root,root) %{_sbindir}/sestatus
 %attr(755,root,root) %{_sbindir}/seunshare
 %{py_sitescriptdir}/*.py[co]
+#%attr(754,root,root) /etc/rc.d/init.d/sandbox
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/*
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/sandbox
 %dir %{_datadir}/sandbox
 %attr(755,root,root) %{_datadir}/sandbox/*.sh
+%attr(755,root,root) %{_datadir}/sandbox/start
 %{_mandir}/man1/newrole.1*
 %{_mandir}/man1/secon.1*
 %{_mandir}/man1/audit2why.1*
+%{_mandir}/man5/sandbox.5*
+%{_mandir}/man5/selinux_config.5*
+%{_mandir}/man5/sestatus.conf.5*
 %{_mandir}/man8/chcat.8*
+%{_mandir}/man8/genhomedircon.8*
 %{_mandir}/man8/fixfiles.8*
 %{_mandir}/man8/load_policy.8*
 %{_mandir}/man8/open_init_pty.8*
@@ -199,6 +205,7 @@ fi
 %{_mandir}/man8/sestatus.8*
 %{_mandir}/man8/setfiles.8*
 %{_mandir}/man8/setsebool.8*
+%{_mandir}/man8/seunshare.8*
 
 %files tools-perl
 %defattr(644,root,root,755)
@@ -211,5 +218,8 @@ fi
 %attr(755,root,root) %{_sbindir}/restorecond
 %attr(754,root,root) /etc/rc.d/init.d/restorecond
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond_user.conf
 %{_mandir}/man8/restorecond.8*
+%{_sysconfdir}/xdg/autostart/restorecond.desktop
+%{_datadir}/dbus-1/services/org.selinux.Restorecond.service
 %endif
