@@ -9,14 +9,14 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.1.0
+Version:	2.1.10
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Base
 #git clone http://oss.tresys.com/git/selinux.git/
-Source0:	http://userspace.selinuxproject.org/releases/20110727/devel/policycoreutils-2.1.0.tar.gz
-# Source0-md5:	f418384ea5bc57080a6ace843646aba9
+Source0:	http://userspace.selinuxproject.org/releases/20120216/%{name}-%{version}.tar.gz
+# Source0-md5:	fefdede2815cdd2ba8b68599fef1f257
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-gui.patch
@@ -25,15 +25,15 @@ URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
-BuildRequires:	libselinux-devel >= 2.1.0
-BuildRequires:	libsemanage-devel >= 2.1.0
-BuildRequires:	libsepol-static >= 2.1.0
+BuildRequires:	libselinux-devel >= 2.1.9
+BuildRequires:	libsemanage-devel >= 2.1.6
+BuildRequires:	libsepol-static >= 2.1.4
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
-Requires:	libselinux >= 2.1.0
-Requires:	libsemanage >= 2.1.0
+Requires:	libselinux >= 2.1.9
+Requires:	libsemanage >= 2.1.6
 Requires:	python
 Requires:	python-modules
 Requires:	python-semanage >= 2.0
@@ -111,7 +111,7 @@ się, że mają przypisane właściwe konteksty plików z polityki.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#patch1 -p1
 
 %{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 
