@@ -9,21 +9,21 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.1.10
-Release:	2
+Version:	2.2.5
+Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
-Group:		Base
+Group:		Applications/System
 #git clone http://oss.tresys.com/git/selinux.git/
-Source0:	http://userspace.selinuxproject.org/releases/20120216/%{name}-%{version}.tar.gz
-# Source0-md5:	fefdede2815cdd2ba8b68599fef1f257
+Source0:	http://userspace.selinuxproject.org/releases/current/%{name}-%{version}.tar.gz
+# Source0-md5:	a2963d7024c5c4ce89f2459d48f91ec8
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
-Patch0:		%{name}-gui.patch
 URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
+BuildRequires:	libcap-ng-devel
 BuildRequires:	libcgroup-devel
 BuildRequires:	libselinux-devel >= 2.1.9
 BuildRequires:	libsemanage-devel >= 2.1.6
@@ -32,6 +32,8 @@ BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
+# for sepolicy/sepolgen
+BuildRequires:	setools-devel >= 3
 Requires:	libselinux >= 2.1.9
 Requires:	libsemanage >= 2.1.6
 Requires:	python
@@ -39,6 +41,7 @@ Requires:	python-modules
 Requires:	python-semanage >= 2.0
 # for audit2allow
 Requires:	python-sepolgen
+Obsoletes:	policycoreutils-tools-perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -77,18 +80,6 @@ load_policy do wczytywania polityki, setfiles do znaczenia systemu
 plików, newrole do przełączania ról i run_init do uruchamiania we
 właściwym kontekście skryptów zawartych w /etc/rc.d/init.d.
 
-%package tools-perl
-Summary:	policycoreutils tools written in Perl
-Summary(pl.UTF-8):	Zestaw narzędzi i skryptów policycoreutils napisanych w Perlu
-Group:		Base
-Requires:	%{name} = %{version}-%{release}
-
-%description tools-perl
-policycoreutils tools written in Perl.
-
-%description tools-perl -l pl.UTF-8
-Zestaw narzędzi i skryptów policycoreutils napisanych w Perlu.
-
 %package restorecond
 Summary:	restorecond - daemon which corrects contexts of newly created files
 Summary(pl.UTF-8):	restorecond - demon poprawiający konteksty nowo tworzonych plików
@@ -108,9 +99,62 @@ Demon restorecond używa inotify do śledzenia plików wymienionych w
 pliku /etc/selinux/restorecond.conf, aby przy ich tworzeniu upewnić
 się, że mają przypisane właściwe konteksty plików z polityki.
 
+%package sepolicy
+Summary:	SELinux Policy Inspection tool
+Summary(pl.UTF-8):	Narzędzie do inspekcji polityk SELinuksa
+Group:		Applications/System
+Requires:	%{name} = %{version}-%{release}
+Requires:	gobject-introspection
+Requires:	gtk+2 >= 2
+Requires:	python-dbus
+Requires:	python-pygobject >= 2
+Requires:	python-pygobject3 >= 2
+Requires:	python-selinux
+Requires:	python-sepolgen
+Requires:	python-slip-dbus
+
+%description sepolicy
+SELinux Policy Inspection tool.
+
+%description sepolicy -l pl.UTF-8
+Narzędzie do inspekcji polityk SELinuksa.
+
+%package -n bash-completion-%{name}
+Summary:	Bash completion for policycoreutils commands
+Summary(pl.UTF-8):	Bashowe dopełnianie składni poleceń policycoreutils
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	bash-completion >= 2
+
+%description -n bash-completion-%{name}
+Bash completion for policycoreutils commands.
+
+%description -n bash-completion-%{name} -l pl.UTF-8
+Bashowe dopełnianie składni poleceń policycoreutils.
+
+%package -n system-config-selinux
+Summary:	Graphical SELinux Management tool
+Summary(pl.UTF-8):	Graficzne narzędzie do zarządzania SELinuksem
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-sepolicy = %{version}-%{release}
+Requires:	python-gnome >= 2
+Requires:	python-pygobject >= 2
+Requires:	python-pygtk-glade >= 2:2
+Requires:	python-pygtk-gtk >= 2:2
+Requires:	python-selinux
+Requires:	polkit
+
+%description -n system-config-selinux
+system-config-selinux provides a graphical interface for managing the
+SELinux configuration.
+
+%description -n system-config-selinux -l pl.UTF-8
+system-config-selinux dostarcza graficzny interfejs do zarządzania
+konfiguracją SELinuksa.
+
 %prep
 %setup -q
-%patch0 -p1
 
 %{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 
@@ -127,14 +171,22 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/{pam.
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir} \
-	PYTHONLIBDIR=$RPM_BUILD_ROOT%{py_scriptdir}
+	PYTHONLIBDIR=$RPM_BUILD_ROOT%{py_scriptdir} \
+	SYSTEMDDIR=$RPM_BUILD_ROOT/lib/systemd
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/newrole
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
 :> $RPM_BUILD_ROOT/etc/security/console.apps/run_init
 
+# fix symlink pointing to buildroot
+ln -sf /sbin/load_policy $RPM_BUILD_ROOT%{_sbindir}/load_policy
+
+%py_comp $RPM_BUILD_ROOT%{py_sitedir}/sepolicy
+%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}/sepolicy
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
+%py_comp $RPM_BUILD_ROOT%{_datadir}/system-config-selinux
+%py_ocomp $RPM_BUILD_ROOT%{_datadir}/system-config-selinux
 %py_postclean
 
 %find_lang %{name}
@@ -155,6 +207,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog
+%attr(755,root,root) %{_bindir}/audit2allow
 %attr(755,root,root) %{_bindir}/audit2why
 %attr(755,root,root) %{_bindir}/chcat
 %attr(4755,root,root) %{_bindir}/newrole
@@ -176,19 +229,20 @@ fi
 %attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
 %attr(755,root,root) %{_sbindir}/seunshare
-%{py_sitescriptdir}/*.py[co]
+%{py_sitescriptdir}/seobject.py[co]
 #%attr(754,root,root) /etc/rc.d/init.d/sandbox
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
-%config(missingok) /etc/security/console.apps/*
+%config(missingok) /etc/security/console.apps/run_init
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/sandbox
 %dir %{_datadir}/sandbox
 %attr(755,root,root) %{_datadir}/sandbox/*.sh
 %attr(755,root,root) %{_datadir}/sandbox/start
+%{_mandir}/man1/audit2allow.1*
+%{_mandir}/man1/audit2why.1*
 %{_mandir}/man1/newrole.1*
 %{_mandir}/man1/secon.1*
-%{_mandir}/man1/audit2why.1*
 %{_mandir}/man5/sandbox.5*
 %{_mandir}/man5/selinux_config.5*
 %{_mandir}/man5/sestatus.conf.5*
@@ -200,26 +254,59 @@ fi
 %{_mandir}/man8/restorecon.8*
 %{_mandir}/man8/run_init.8*
 %{_mandir}/man8/sandbox.8*
-%{_mandir}/man8/semanage.8*
+%{_mandir}/man8/semanage*.8*
 %{_mandir}/man8/semodule*.8*
 %{_mandir}/man8/sestatus.8*
 %{_mandir}/man8/setfiles.8*
 %{_mandir}/man8/setsebool.8*
 %{_mandir}/man8/seunshare.8*
 
-%files tools-perl
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/audit2allow
-%{_mandir}/man1/audit2allow.1*
-
 %if %{with restorecond}
 %files restorecond
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/restorecond
 %attr(754,root,root) /etc/rc.d/init.d/restorecond
+%{systemdunitdir}/restorecond.service
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/selinux/restorecond_user.conf
 %{_mandir}/man8/restorecond.8*
 %{_sysconfdir}/xdg/autostart/restorecond.desktop
 %{_datadir}/dbus-1/services/org.selinux.Restorecond.service
 %endif
+
+%files sepolicy
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/sepolgen
+%attr(755,root,root) %{_bindir}/sepolicy
+%dir %{py_sitedir}/sepolicy
+%attr(755,root,root) %{py_sitedir}/sepolicy/_policy.so
+%{py_sitedir}/sepolicy/*.py[co]
+%{py_sitedir}/sepolicy/sepolicy.glade
+%dir %{py_sitedir}/sepolicy/help
+%{py_sitedir}/sepolicy/help/__init__.py[co]
+%{py_sitedir}/sepolicy/help/*.png
+%{py_sitedir}/sepolicy/help/*.txt
+%dir %{py_sitedir}/sepolicy/templates
+%{py_sitedir}/sepolicy/templates/*.py[co]
+%{py_sitedir}/sepolicy-1.1-py*.egg-info
+%{_mandir}/man8/sepolgen.8*
+%{_mandir}/man8/sepolicy*.8*
+/etc/dbus-1/system.d/org.selinux.conf
+%{_datadir}/dbus-1/system-services/org.selinux.service
+%{_datadir}/polkit-1/actions/org.selinux.policy
+
+%files -n bash-completion-%{name}
+%defattr(644,root,root,755)
+%{bash_compdir}/semanage
+%{bash_compdir}/sepolicy
+%{bash_compdir}/setsebool
+
+%files -n system-config-selinux
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/system-config-selinux
+%{_datadir}/system-config-selinux
+%{_datadir}/polkit-1/actions/org.selinux.config.policy
+%{_iconsdir}/hicolor/24x24/apps/system-config-selinux.png
+%{_pixmapsdir}/system-config-selinux.png
+%{_mandir}/man8/selinux-polgengui.8*
+%{_mandir}/man8/system-config-selinux.8*
