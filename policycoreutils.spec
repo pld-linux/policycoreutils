@@ -1,5 +1,5 @@
 # TODO:
-# - PLDify init.d/restorecond (uses bashisms instead of our nls)
+# - PLDify init.d/{mcstrans,restorecond} (uses bashisms instead of our nls)
 # - PLDify and package init.d/sandbox script; sandbox to subpackage? (seems to use python+pygtk)
 #
 # Conditional build:
@@ -9,14 +9,14 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.2.5
+Version:	2.3
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #git clone http://oss.tresys.com/git/selinux.git/
 Source0:	http://userspace.selinuxproject.org/releases/current/%{name}-%{version}.tar.gz
-# Source0-md5:	a2963d7024c5c4ce89f2459d48f91ec8
+# Source0-md5:	9a5db20adfe2250f53833b277ac796ae
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		http://userspace.selinuxproject.org/trac/wiki
@@ -25,17 +25,17 @@ BuildRequires:	gettext-devel
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libcap-ng-devel
 BuildRequires:	libcgroup-devel
-BuildRequires:	libselinux-devel >= 2.1.9
-BuildRequires:	libsemanage-devel >= 2.1.6
-BuildRequires:	libsepol-static >= 2.1.4
+BuildRequires:	libselinux-devel >= 2.3
+BuildRequires:	libsemanage-devel >= 2.3
+BuildRequires:	libsepol-static >= 2.3
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
 # for sepolicy/sepolgen
 BuildRequires:	setools-devel >= 3
-Requires:	libselinux >= 2.1.9
-Requires:	libsemanage >= 2.1.6
+Requires:	libselinux >= 2.3
+Requires:	libsemanage >= 2.3
 Requires:	python
 Requires:	python-modules
 Requires:	python-semanage >= 2.0
@@ -119,6 +119,18 @@ SELinux Policy Inspection tool.
 %description sepolicy -l pl.UTF-8
 Narzędzie do inspekcji polityk SELinuksa.
 
+%package mcstrans
+Summary:	MCS (Multiple Category System) SELinux service
+Summary(pl.UTF-8):	Usługa SELinuksa MCS (Multiple Category System)
+Group:		Daemons
+Requires:	%{name} = %{version}-%{release}
+
+%description mcstrans
+MCS (Multiple Category System) SELinux service.
+
+%description mcstrans -l pl.UTF-8
+Usługa SELinuksa MCS (Multiple Category System).
+
 %package -n bash-completion-%{name}
 Summary:	Bash completion for policycoreutils commands
 Summary(pl.UTF-8):	Bashowe dopełnianie składni poleceń policycoreutils
@@ -164,6 +176,11 @@ konfiguracją SELinuksa.
 	CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	LIBDIR="%{_libdir}"
 
+CFLAGS="%{rpmcflags} %{rpmcppflags} -Wall -W -Wundef -Wmissing-noreturn -Wmissing-format-attribute" \
+%{__make} -C mcstrans \
+	CC="%{__cc}" \
+	LIBDIR="%{_libdir}"
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/{pam.d,security/console.apps}}
@@ -172,6 +189,10 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/{pam.
 	DESTDIR=$RPM_BUILD_ROOT \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir} \
 	PYTHONLIBDIR=$RPM_BUILD_ROOT%{py_scriptdir} \
+	SYSTEMDDIR=$RPM_BUILD_ROOT/lib/systemd
+
+%{__make} -C mcstrans install \
+	DESTDIR=$RPM_BUILD_ROOT \
 	SYSTEMDDIR=$RPM_BUILD_ROOT/lib/systemd
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/newrole
@@ -202,6 +223,16 @@ rm -rf $RPM_BUILD_ROOT
 if [ "$1" = "0" ]; then
 	%service restorecond stop
 	/sbin/chkconfig --del restorecond
+fi
+
+%post mcstrans
+/sbin/chkconfig --add mcstrans
+%service mcstrans restart
+
+%preun mcstrans
+if [ "$1" = "0" ]; then
+	%service mcstrans stop
+	/sbin/chkconfig --del mcstrans
 fi
 
 %files -f %{name}.lang
@@ -295,6 +326,16 @@ fi
 %{_datadir}/dbus-1/system-services/org.selinux.service
 %{_datadir}/polkit-1/actions/org.selinux.policy
 
+%files mcstrans
+%defattr(644,root,root,755)
+%doc mcstrans/{ChangeLog,TODO}
+%attr(755,root,root) /sbin/mcstransd
+%attr(754,root,root) /etc/rc.d/init.d/mcstrans
+%{systemdunitdir}/mcstrans.service
+%{_mandir}/man8/mcs.8*
+%{_mandir}/man8/mcstransd.8*
+%{_mandir}/man8/setrans.conf.8*
+
 %files -n bash-completion-%{name}
 %defattr(644,root,root,755)
 %{bash_compdir}/semanage
@@ -306,7 +347,9 @@ fi
 %attr(755,root,root) %{_bindir}/system-config-selinux
 %{_datadir}/system-config-selinux
 %{_datadir}/polkit-1/actions/org.selinux.config.policy
+%{_iconsdir}/hicolor/*/apps/sepolicy.png
 %{_iconsdir}/hicolor/24x24/apps/system-config-selinux.png
+%{_pixmapsdir}/sepolicy.png
 %{_pixmapsdir}/system-config-selinux.png
 %{_mandir}/man8/selinux-polgengui.8*
 %{_mandir}/man8/system-config-selinux.8*
