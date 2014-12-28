@@ -21,7 +21,7 @@ Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		http://userspace.selinuxproject.org/trac/wiki
 BuildRequires:	audit-libs-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libcap-ng-devel
 BuildRequires:	libcgroup-devel
