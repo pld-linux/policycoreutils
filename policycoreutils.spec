@@ -9,33 +9,33 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.3
+Version:	2.4
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
-#git clone http://oss.tresys.com/git/selinux.git/
-Source0:	http://userspace.selinuxproject.org/releases/current/%{name}-%{version}.tar.gz
-# Source0-md5:	9a5db20adfe2250f53833b277ac796ae
+#Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
+Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20150202/%{name}-%{version}.tar.gz
+# Source0-md5:	795b05c3ad58253cba61249ec65b28ef
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
-URL:		http://userspace.selinuxproject.org/trac/wiki
+URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libcap-ng-devel
 BuildRequires:	libcgroup-devel
-BuildRequires:	libselinux-devel >= 2.3
-BuildRequires:	libsemanage-devel >= 2.3
-BuildRequires:	libsepol-static >= 2.3
+BuildRequires:	libselinux-devel >= 2.4
+BuildRequires:	libsemanage-devel >= 2.4
+BuildRequires:	libsepol-static >= 2.4
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
 # for sepolicy/sepolgen
 BuildRequires:	setools-devel >= 3
-Requires:	libselinux >= 2.3
-Requires:	libsemanage >= 2.3
+Requires:	libselinux >= 2.4
+Requires:	libsemanage >= 2.4
 Requires:	python
 Requires:	python-modules
 Requires:	python-semanage >= 2.0
@@ -187,6 +187,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,8},/etc/{pam.
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
+	LIBEXECDIR=$RPM_BUILD_ROOT%{_libdir} \
 	MANDIR=$RPM_BUILD_ROOT%{_mandir} \
 	PYTHONLIBDIR=$RPM_BUILD_ROOT%{py_scriptdir} \
 	SYSTEMDDIR=$RPM_BUILD_ROOT/lib/systemd
@@ -209,6 +210,9 @@ ln -sf /sbin/load_policy $RPM_BUILD_ROOT%{_sbindir}/load_policy
 %py_comp $RPM_BUILD_ROOT%{_datadir}/system-config-selinux
 %py_ocomp $RPM_BUILD_ROOT%{_datadir}/system-config-selinux
 %py_postclean
+
+# empty versions of short-code locales
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{af_ZA,bn_BD,cs_CZ,es_ES,eu_ES,fa_IR,hr_HR,it_IT,ja_JP,lt_LT,lv_LV,ms_MY,ru_RU,si_LK,ta_IN,uk_UA,vi_VN,zh_CN.GB2312,zh_TW.Big5}
 
 %find_lang %{name}
 
@@ -260,6 +264,8 @@ fi
 %attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
 %attr(755,root,root) %{_sbindir}/seunshare
+%dir %{_libdir}/selinux/hll
+%attr(755,root,root) %{_libdir}/selinux/hll/pp
 %{py_sitescriptdir}/seobject.py[co]
 #%attr(754,root,root) /etc/rc.d/init.d/sandbox
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
