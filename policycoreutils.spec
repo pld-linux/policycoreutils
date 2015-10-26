@@ -10,7 +10,7 @@ Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
 Version:	2.4
-Release:	1
+Release:	2
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
@@ -19,15 +19,19 @@ Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/rel
 # Source0-md5:	795b05c3ad58253cba61249ec65b28ef
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
+Patch0:		%{name}-libdir.patch
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
+%{?with_restorecond:BuildRequires:	dbus-devel >= 1.0}
 BuildRequires:	gettext-tools
+%{?with_restorecond:BuildRequires:	glib2-devel >= 2.0}
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libcap-ng-devel
 BuildRequires:	libcgroup-devel
 BuildRequires:	libselinux-devel >= 2.4
 BuildRequires:	libsemanage-devel >= 2.4
 BuildRequires:	libsepol-static >= 2.4
+%{?with_restorecond:BuildRequires:	pkgconfig}
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
@@ -167,6 +171,7 @@ konfiguracją SELinuksa.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %{!?with_restorecond:sed -i 's/restorecond//' Makefile}
 

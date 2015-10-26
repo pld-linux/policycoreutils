@@ -1,0 +1,16 @@
+--- policycoreutils-2.4/restorecond/Makefile.orig	2015-02-02 15:38:10.000000000 +0100
++++ policycoreutils-2.4/restorecond/Makefile	2015-10-26 19:30:14.953486038 +0100
+@@ -11,11 +11,11 @@
+ INITDIR ?= $(DESTDIR)/etc/rc.d/init.d
+ SELINUXDIR = $(DESTDIR)/etc/selinux
+ 
+-DBUSFLAGS = -DHAVE_DBUS -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -I/usr/lib/dbus-1.0/include
++DBUSFLAGS = -DHAVE_DBUS $(shell pkg-config --cflags dbus-1)
+ DBUSLIB = -ldbus-glib-1 -ldbus-1
+ 
+ CFLAGS ?= -g -Werror -Wall -W
+-override CFLAGS += -I$(PREFIX)/include $(DBUSFLAGS) -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/lib/glib-2.0/include
++override CFLAGS += -I$(PREFIX)/include $(DBUSFLAGS) $(shell pkg-config --cflags glib-2.0)
+ 
+ LDLIBS += -lselinux $(DBUSLIB) -lglib-2.0 -L$(LIBDIR)
+ 
