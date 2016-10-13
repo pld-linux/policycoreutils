@@ -1,0 +1,11 @@
+--- policycoreutils-2.5/sepolicy/Makefile.orig	2016-02-23 17:31:41.000000000 +0100
++++ policycoreutils-2.5/sepolicy/Makefile	2016-10-13 17:33:11.330078720 +0200
+@@ -32,7 +32,7 @@
+ 	@$(PYTHON) test_sepolicy.py -v
+ 
+ install:
+-	$(PYTHON) setup.py install `test -n "$(DESTDIR)" && echo --root $(DESTDIR)`
++	$(PYTHON) setup.py install `test -n "$(DESTDIR)" && echo --root $(DESTDIR)` --prefix=/usr
+ 	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+ 	install -m 755 sepolicy.py $(BINDIR)/sepolicy
+ 	(cd $(BINDIR); ln -sf sepolicy sepolgen)

@@ -3,23 +3,24 @@
 # - PLDify and package init.d/sandbox script; sandbox to subpackage? (seems to use python+pygtk)
 #
 # Conditional build:
-%bcond_without  restorecond   # don't build restorecond (glibc>2.4)
+%bcond_without  restorecond   # don't build restorecond (glibc>=2.4)
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.4
-Release:	2
+Version:	2.5
+Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
-Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20150202/%{name}-%{version}.tar.gz
-# Source0-md5:	795b05c3ad58253cba61249ec65b28ef
+Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20160223/%{name}-%{version}.tar.gz
+# Source0-md5:	9ad9331b2133262fb3f774359a7f4761
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-libdir.patch
+Patch1:		%{name}-pythondir.patch
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 %{?with_restorecond:BuildRequires:	dbus-devel >= 1.0}
@@ -28,9 +29,9 @@ BuildRequires:	gettext-tools
 %{?with_restorecond:BuildRequires:	glibc-devel >= 6:2.4}
 BuildRequires:	libcap-ng-devel
 BuildRequires:	libcgroup-devel
-BuildRequires:	libselinux-devel >= 2.4
-BuildRequires:	libsemanage-devel >= 2.4
-BuildRequires:	libsepol-static >= 2.4
+BuildRequires:	libselinux-devel >= 2.5
+BuildRequires:	libsemanage-devel >= 2.5
+BuildRequires:	libsepol-static >= 2.5
 %{?with_restorecond:BuildRequires:	pkgconfig}
 BuildRequires:	pam-devel
 BuildRequires:	rpm-perlprov
@@ -38,8 +39,8 @@ BuildRequires:	rpm-pythonprov
 %{!?with_restorecond:BuildRequires:	sed >= 4.0}
 # for sepolicy/sepolgen
 BuildRequires:	setools-devel >= 3
-Requires:	libselinux >= 2.4
-Requires:	libsemanage >= 2.4
+Requires:	libselinux >= 2.5
+Requires:	libsemanage >= 2.5
 Requires:	python
 Requires:	python-modules
 Requires:	python-semanage >= 2.0
@@ -172,8 +173,9 @@ konfiguracją SELinuksa.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
-%{!?with_restorecond:sed -i 's/restorecond//' Makefile}
+%{!?with_restorecond:%{__sed} -i 's/restorecond//' Makefile}
 
 %build
 %{__make} \
