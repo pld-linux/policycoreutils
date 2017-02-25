@@ -9,14 +9,14 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.5
+Version:	2.6
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
-Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20160223/%{name}-%{version}.tar.gz
-# Source0-md5:	9ad9331b2133262fb3f774359a7f4761
+Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20161014/%{name}-%{version}.tar.gz
+# Source0-md5:	0358f0136e2dd9a8c9e99f181aaab1b2
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 Patch0:		%{name}-libdir.patch
@@ -219,7 +219,7 @@ ln -sf /sbin/load_policy $RPM_BUILD_ROOT%{_sbindir}/load_policy
 %py_postclean
 
 # empty versions of short-code locales
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{af_ZA,bn_BD,cs_CZ,es_ES,eu_ES,fa_IR,hr_HR,it_IT,ja_JP,lt_LT,lv_LV,ms_MY,ru_RU,si_LK,ta_IN,uk_UA,vi_VN,zh_CN.GB2312,zh_TW.Big5}
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{bn_BD,lt_LT,lv_LV,si_LK,vi_VN,zh_CN.GB2312,zh_TW.Big5}
 
 %find_lang %{name}
 
@@ -261,6 +261,7 @@ fi
 %attr(755,root,root) /sbin/fixfiles
 %attr(755,root,root) /sbin/load_policy
 %attr(755,root,root) /sbin/restorecon
+%attr(755,root,root) /sbin/restorecon_xattr
 %attr(755,root,root) /sbin/setfiles
 %attr(755,root,root) %{_sbindir}/genhomedircon
 %attr(755,root,root) %{_sbindir}/load_policy
@@ -296,6 +297,7 @@ fi
 %{_mandir}/man8/load_policy.8*
 %{_mandir}/man8/open_init_pty.8*
 %{_mandir}/man8/restorecon.8*
+%{_mandir}/man8/restorecon_xattr.8*
 %{_mandir}/man8/run_init.8*
 %{_mandir}/man8/sandbox.8*
 %{_mandir}/man8/semanage*.8*
@@ -323,7 +325,6 @@ fi
 %attr(755,root,root) %{_bindir}/sepolgen
 %attr(755,root,root) %{_bindir}/sepolicy
 %dir %{py_sitedir}/sepolicy
-%attr(755,root,root) %{py_sitedir}/sepolicy/_policy.so
 %{py_sitedir}/sepolicy/*.py[co]
 %{py_sitedir}/sepolicy/sepolicy.glade
 %dir %{py_sitedir}/sepolicy/help
