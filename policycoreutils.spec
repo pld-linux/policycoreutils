@@ -117,8 +117,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/semodule
 %attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
-%dir %{_libdir}/selinux/hll
-%attr(755,root,root) %{_libdir}/selinux/hll/pp
+%dir %{_libexecdir}/selinux/hll
+%attr(755,root,root) %{_libexecdir}/selinux/hll/pp
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/run_init
 %config(missingok) /etc/security/console.apps/run_init
