@@ -1,26 +1,26 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.7
+Version:	2.8
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
-Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20170804/%{name}-%{version}.tar.gz
-# Source0-md5:	65311b66ae01f7b7ad7c2ea7401b68ed
+Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20180524/%{name}-%{version}.tar.gz
+# Source0-md5:	da5ceb9c7e1e6f8c573731031b91cffe
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libselinux-devel >= 2.7
-BuildRequires:	libsemanage-devel >= 2.7
-BuildRequires:	libsepol-devel >= 2.7
+BuildRequires:	libselinux-devel >= 2.8
+BuildRequires:	libsemanage-devel >= 2.8
+BuildRequires:	libsepol-devel >= 2.8
 BuildRequires:	pam-devel
-Requires:	libselinux >= 2.7
-Requires:	libsemanage >= 2.7
-Requires:	libsepol >= 2.7
+Requires:	libselinux >= 2.8
+Requires:	libsemanage >= 2.8
+Requires:	libsepol >= 2.8
 Obsoletes:	policycoreutils-tools-perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -38,8 +38,8 @@ Multi-level Security.
 policycoreutils contains the policy core utilities that are required
 for basic operation of a SELinux system. These utilities include
 load_policy to load policies, setfiles to label filesystems, newrole
-to switch roles, and run_init to run /etc/init.d scripts in the proper
-context.
+to switch roles, and run_init to run /etc/rc.d/init.d scripts in the
+proper context.
 
 %description -l pl.UTF-8
 Security-enhanced Linux jest prototypem jądra Linuksa i wielu
@@ -88,7 +88,7 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,security/console.apps}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	LIBEXECDIR=$RPM_BUILD_ROOT%{_libexecdir}
+	LIBEXECDIR=%{_libexecdir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/newrole
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
@@ -106,12 +106,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/newrole
 %attr(755,root,root) %{_bindir}/secon
-%attr(755,root,root) /sbin/fixfiles
-%attr(755,root,root) /sbin/load_policy
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) /sbin/restorecon_xattr
 %attr(755,root,root) /sbin/setfiles
+%attr(755,root,root) %{_sbindir}/fixfiles
 %attr(755,root,root) %{_sbindir}/genhomedircon
+%attr(755,root,root) %{_sbindir}/load_policy
 %attr(755,root,root) %{_sbindir}/open_init_pty
 %attr(755,root,root) %{_sbindir}/run_init
 %attr(755,root,root) %{_sbindir}/semodule
