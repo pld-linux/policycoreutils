@@ -1,26 +1,26 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.8
+Version:	2.9
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
-Source0:	https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20180524/%{name}-%{version}.tar.gz
-# Source0-md5:	da5ceb9c7e1e6f8c573731031b91cffe
+Source0:	https://github.com/SELinuxProject/selinux/releases/download/20190315/%{name}-%{version}.tar.gz
+# Source0-md5:	0fbebdb4761353726cc739d5528f21d8
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libselinux-devel >= 2.8
-BuildRequires:	libsemanage-devel >= 2.8
-BuildRequires:	libsepol-devel >= 2.8
+BuildRequires:	libselinux-devel >= 2.9
+BuildRequires:	libsemanage-devel >= 2.9
+BuildRequires:	libsepol-devel >= 2.9
 BuildRequires:	pam-devel
-Requires:	libselinux >= 2.8
-Requires:	libsemanage >= 2.8
-Requires:	libsepol >= 2.8
+Requires:	libselinux >= 2.9
+Requires:	libsemanage >= 2.9
+Requires:	libsepol >= 2.9
 Obsoletes:	policycoreutils-tools-perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -96,6 +96,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/run_init
 
 # empty versions of short-code locales
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{bn_BD,lt_LT,lv_LV,si_LK,vi_VN,zh_CN.GB2312,zh_TW.Big5}
+# not supported by glibc (as of 2.30)
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/locale/{aln,bal,ilo}
 
 %find_lang %{name}
 
@@ -138,6 +140,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/sestatus.8*
 %{_mandir}/man8/setfiles.8*
 %{_mandir}/man8/setsebool.8*
+%lang(ru) %{_mandir}/ru/man1/newrole.1*
+%lang(ru) %{_mandir}/ru/man1/secon.1*
+%lang(ru) %{_mandir}/ru/man5/selinux_config.5*
+%lang(ru) %{_mandir}/ru/man5/sestatus.conf.5*
+%lang(ru) %{_mandir}/ru/man8/genhomedircon.8*
+%lang(ru) %{_mandir}/ru/man8/fixfiles.8*
+%lang(ru) %{_mandir}/ru/man8/load_policy.8*
+%lang(ru) %{_mandir}/ru/man8/open_init_pty.8*
+%lang(ru) %{_mandir}/ru/man8/restorecon.8*
+%lang(ru) %{_mandir}/ru/man8/restorecon_xattr.8*
+%lang(ru) %{_mandir}/ru/man8/run_init.8*
+%lang(ru) %{_mandir}/ru/man8/semodule.8*
+%lang(ru) %{_mandir}/ru/man8/sestatus.8*
+%lang(ru) %{_mandir}/ru/man8/setfiles.8*
+%lang(ru) %{_mandir}/ru/man8/setsebool.8*
 
 %files -n bash-completion-%{name}
 %defattr(644,root,root,755)
