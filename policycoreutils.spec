@@ -1,27 +1,28 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	2.9
+Version:	3.1
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
-Source0:	https://github.com/SELinuxProject/selinux/releases/download/20190315/%{name}-%{version}.tar.gz
-# Source0-md5:	0fbebdb4761353726cc739d5528f21d8
+Source0:	https://github.com/SELinuxProject/selinux/releases/download/20200710/%{name}-%{version}.tar.gz
+# Source0-md5:	3097ac2c83e47af130452f10399282cb
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libselinux-devel >= 2.9
-BuildRequires:	libsemanage-devel >= 2.9
-BuildRequires:	libsepol-devel >= 2.9
+BuildRequires:	libselinux-devel >= 3.1
+BuildRequires:	libsemanage-devel >= 3.1
+BuildRequires:	libsepol-devel >= 3.1
 BuildRequires:	pam-devel
-Requires:	libselinux >= 2.9
-Requires:	libsemanage >= 2.9
-Requires:	libsepol >= 2.9
-Obsoletes:	policycoreutils-tools-perl
+BuildRequires:	rpm-build >= 4.6
+Requires:	libselinux >= 3.1
+Requires:	libsemanage >= 3.1
+Requires:	libsepol >= 3.1
+Obsoletes:	policycoreutils-tools-perl < 2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -66,6 +67,7 @@ Summary(pl.UTF-8):	Bashowe dopełnianie składni poleceń policycoreutils
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2
+BuildArch:	noarch
 
 %description -n bash-completion-%{name}
 Bash completion for policycoreutils commands.
