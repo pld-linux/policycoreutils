@@ -66,7 +66,7 @@ Summary:	Bash completion for policycoreutils commands
 Summary(pl.UTF-8):	Bashowe dopełnianie składni poleceń policycoreutils
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
-Requires:	bash-completion >= 2
+Requires:	bash-completion >= 1:2
 BuildArch:	noarch
 
 %description -n bash-completion-%{name}
