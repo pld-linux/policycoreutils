@@ -1,27 +1,27 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	3.1
+Version:	3.6
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
-Source0:	https://github.com/SELinuxProject/selinux/releases/download/20200710/%{name}-%{version}.tar.gz
-# Source0-md5:	3097ac2c83e47af130452f10399282cb
+Source0:	https://github.com/SELinuxProject/selinux/releases/download/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	59c07aec078a0ebb6ac6f259b8b466ad
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libselinux-devel >= 3.1
-BuildRequires:	libsemanage-devel >= 3.1
-BuildRequires:	libsepol-devel >= 3.1
+BuildRequires:	libselinux-devel >= 3.6
+BuildRequires:	libsemanage-devel >= 3.6
+BuildRequires:	libsepol-devel >= 3.6
 BuildRequires:	pam-devel
 BuildRequires:	rpm-build >= 4.6
-Requires:	libselinux >= 3.1
-Requires:	libsemanage >= 3.1
-Requires:	libsepol >= 3.1
+Requires:	libselinux >= 3.6
+Requires:	libsemanage >= 3.6
+Requires:	libsepol >= 3.6
 Obsoletes:	policycoreutils-tools-perl < 2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -142,21 +142,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/sestatus.8*
 %{_mandir}/man8/setfiles.8*
 %{_mandir}/man8/setsebool.8*
-%lang(ru) %{_mandir}/ru/man1/newrole.1*
-%lang(ru) %{_mandir}/ru/man1/secon.1*
-%lang(ru) %{_mandir}/ru/man5/selinux_config.5*
-%lang(ru) %{_mandir}/ru/man5/sestatus.conf.5*
-%lang(ru) %{_mandir}/ru/man8/genhomedircon.8*
-%lang(ru) %{_mandir}/ru/man8/fixfiles.8*
-%lang(ru) %{_mandir}/ru/man8/load_policy.8*
-%lang(ru) %{_mandir}/ru/man8/open_init_pty.8*
-%lang(ru) %{_mandir}/ru/man8/restorecon.8*
-%lang(ru) %{_mandir}/ru/man8/restorecon_xattr.8*
-%lang(ru) %{_mandir}/ru/man8/run_init.8*
-%lang(ru) %{_mandir}/ru/man8/semodule.8*
-%lang(ru) %{_mandir}/ru/man8/sestatus.8*
-%lang(ru) %{_mandir}/ru/man8/setfiles.8*
-%lang(ru) %{_mandir}/ru/man8/setsebool.8*
 
 %files -n bash-completion-%{name}
 %defattr(644,root,root,755)
