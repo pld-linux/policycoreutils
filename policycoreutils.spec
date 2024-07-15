@@ -1,27 +1,27 @@
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	3.6
+Version:	3.7
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
 Source0:	https://github.com/SELinuxProject/selinux/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	59c07aec078a0ebb6ac6f259b8b466ad
+# Source0-md5:	b240edcce09c9909db8287cc7fdf1dc0
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libselinux-devel >= 3.6
-BuildRequires:	libsemanage-devel >= 3.6
-BuildRequires:	libsepol-devel >= 3.6
+BuildRequires:	libselinux-devel >= 3.7
+BuildRequires:	libsemanage-devel >= 3.7
+BuildRequires:	libsepol-devel >= 3.7
 BuildRequires:	pam-devel
 BuildRequires:	rpm-build >= 4.6
-Requires:	libselinux >= 3.6
-Requires:	libsemanage >= 3.6
-Requires:	libsepol >= 3.6
+Requires:	libselinux >= 3.7
+Requires:	libsemanage >= 3.7
+Requires:	libsepol >= 3.7
 Obsoletes:	policycoreutils-tools-perl < 2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -110,6 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/newrole
 %attr(755,root,root) %{_bindir}/secon
+%attr(755,root,root) %{_bindir}/sestatus
 %attr(755,root,root) /sbin/restorecon
 %attr(755,root,root) /sbin/restorecon_xattr
 %attr(755,root,root) /sbin/setfiles
