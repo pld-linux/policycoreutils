@@ -1,27 +1,28 @@
+%define	selinux_ver	3.8
 Summary:	SELinux policy core utilities
 Summary(pl.UTF-8):	Podstawowe narzędzia dla polityki SELinux
 Name:		policycoreutils
-Version:	3.7
+Version:	3.8
 Release:	1
 # some parts strictly v2, some v2+
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/SELinuxProject/selinux/wiki/Releases
 Source0:	https://github.com/SELinuxProject/selinux/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b240edcce09c9909db8287cc7fdf1dc0
+# Source0-md5:	7406e133f3910aa788a415661a26c302
 Source1:	%{name}-newrole.pamd
 Source2:	%{name}-run_init.pamd
 URL:		https://github.com/SELinuxProject/selinux/wiki
 BuildRequires:	audit-libs-devel
 BuildRequires:	gettext-tools
-BuildRequires:	libselinux-devel >= 3.7
-BuildRequires:	libsemanage-devel >= 3.7
-BuildRequires:	libsepol-devel >= 3.7
+BuildRequires:	libselinux-devel >= %{selinux_ver}
+BuildRequires:	libsemanage-devel >= %{selinux_ver}
+BuildRequires:	libsepol-devel >= %{selinux_ver}
 BuildRequires:	pam-devel
 BuildRequires:	rpm-build >= 4.6
-Requires:	libselinux >= 3.7
-Requires:	libsemanage >= 3.7
-Requires:	libsepol >= 3.7
+Requires:	libselinux >= %{selinux_ver}
+Requires:	libsemanage >= %{selinux_ver}
+Requires:	libsepol >= %{selinux_ver}
 Obsoletes:	policycoreutils-tools-perl < 2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -122,6 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/semodule
 %attr(755,root,root) %{_sbindir}/setsebool
 %attr(755,root,root) %{_sbindir}/sestatus
+%attr(755,root,root) %{_sbindir}/unsetfiles
 %dir %{_libexecdir}/selinux/hll
 %attr(755,root,root) %{_libexecdir}/selinux/hll/pp
 %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newrole
@@ -130,6 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) /etc/sestatus.conf
 %{_mandir}/man1/newrole.1*
 %{_mandir}/man1/secon.1*
+%{_mandir}/man1/unsetfiles.1*
 %{_mandir}/man5/selinux_config.5*
 %{_mandir}/man5/sestatus.conf.5*
 %{_mandir}/man8/genhomedircon.8*
